@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="rental_contract_form_view_inherit" model="ir.ui.view">
+		    <field name="name">rental.contract.form</field>
+		    <field name="model">rental.contract</field>
+		    <field name="inherit_id" ref="itsys_real_estate.rental_contract_form_view"/>
+		    <field name="arch" type="xml">
+		    	<field name="account_income" position="after">
+		    		<field name="template_id"/>
+		    	</field>
+		    </field>
+		</record>
+    </data>
+</odoo>

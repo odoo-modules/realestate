@@ -1,0 +1,386 @@
+<?xml version="1.0"?>
+<odoo>
+<data noupdate="0">
+        <report 
+            id="report_reservation_rs"
+            string="Reservation"
+            model="unit.reservation"
+            report_type="qweb-pdf"
+            file="itsys_real_estate.report_reservation" 
+            name="itsys_real_estate.report_reservation" 
+        />
+
+        <report
+            id="report_ownership_contract_rs"
+            string="Ownership Contract"
+            model="ownership.contract"
+            report_type="qweb-pdf"
+            file="itsys_real_estate.report_ownership_contract"
+            name="itsys_real_estate.report_ownership_contract"
+        />
+
+        <report
+            id="report_release_contract_rs"
+            string="Release Contract"
+            model="unit.release"
+            report_type="qweb-pdf"
+            file="itsys_real_estate.report_release_contract"
+            name="itsys_real_estate.report_release_contract"
+        />
+
+        <report
+            id="report_quittance_letter_rs"
+            string="Quittance Letter"
+            model="ownership.contract"
+            report_type="qweb-pdf"
+            file="itsys_real_estate.report_quittance_letter"
+            name="itsys_real_estate.report_quittance_letter"
+        />
+
+        <report
+            id="report_rental_contract_rs"
+            string="Rental Contract"
+            model="rental.contract"
+            report_type="qweb-pdf"
+            file="itsys_real_estate.report_rental_contract"
+            name="itsys_real_estate.report_rental_contract"
+        />
+
+        <report
+            id="report_sales_rep_rs"
+            string="Sales Representatives"
+            model="ownership.contract"
+            report_type="qweb-pdf"
+            file="itsys_real_estate.report_sales_rep"
+            name="itsys_real_estate.report_sales_rep"
+            menu="False"
+        />
+
+        <report
+            id="report_unit_occupancy"
+            string="Occupancy Rates"
+            model="product.template"
+            report_type="qweb-pdf"
+            file="itsys_real_estate.report_occupancy"
+            name="itsys_real_estate.report_occupancy"
+            menu="False"
+        />
+        <report
+            id="due_payments_customers"
+            string="Due Payments / Customers"
+            model="ownership.contract"
+            report_type="qweb-pdf"
+            file="itsys_real_estate.report_due_payments_customers"
+            name="itsys_real_estate.report_due_payments_customers"
+            menu="False"
+        />
+
+        <report
+            id="due_payments_units"
+            string="Due Payments / Units"
+            model="ownership.contract"
+            report_type="qweb-pdf"
+            file="itsys_real_estate.report_due_payments_units"
+            name="itsys_real_estate.report_due_payments_units"
+            menu="False"
+        />
+        <report
+            id="late_payments_customers"
+            string="Late Payments / Customers"
+            model="ownership.contract"
+            report_type="qweb-pdf"
+            file="itsys_real_estate.report_late_payments_customers"
+            name="itsys_real_estate.report_late_payments_customers"
+            menu="False"
+        />
+        <report
+            id="late_payments_units"
+            string="Late Payments / Units"
+            model="ownership.contract"
+            report_type="qweb-pdf"
+            file="itsys_real_estate.report_late_payments_units"
+            name="itsys_real_estate.report_late_payments_units"
+            menu="False"
+        />
+        <!--<record id="paperformat_lowmargin" model="report.paperformat">-->
+            <!--<field name="name">Paper Format A4</field>-->
+            <!--<field name="default" eval="True" />-->
+            <!--<field name="format">A4</field>-->
+            <!--<field name="page_height">0</field>-->
+            <!--<field name="page_width">0</field>-->
+            <!--<field name="orientation">Portrait</field>-->
+            <!--<field name="margin_top">4</field>-->
+            <!--<field name="margin_bottom">4</field>-->
+            <!--<field name="margin_left">4</field>-->
+            <!--<field name="margin_right">4</field>-->
+            <!--<field name="header_line" eval="False" />-->
+            <!--<field name="header_spacing">0</field>-->
+            <!--<field name="dpi">90</field>-->
+        <!--</record>-->
+
+        <!--<record id="itsys_real_estate.report_reservation_rs" model="ir.actions.report.xml">-->
+            <!--<field name="paperformat_id" ref="itsys_real_estate.paperformat_lowmargin" />-->
+        <!--</record>        -->
+    <!-- <record id="aeroo_representatives_sales_report_id" model="ir.actions.report.xml">
+        <field name="name">Representatives Sales</field>
+        <field name="type">ir.actions.report.xml</field>
+        <field name="model">salesperson.sales.check</field>
+        <field name="report_name">salesperson_sales</field>
+        <field name="report_type">aeroo</field>
+        <field name="in_format">oo-odt</field>
+        <field name="parser_loc">real_estate/report/parser_salesperson.py</field>
+        <field name="report_rml">real_estate/report/templates/salesperson_sales.odt</field>
+        <field name="parser_state">loc</field>
+        <field name="tml_source">file</field>
+    </record>
+
+
+    <ir_set>
+        <field eval="'action'" name="key"/>
+        <field eval="'client_print_multi'" name="key2"/>
+        <field eval="['salesperson.sales.check']" name="models"/>
+        <field name="name">Representatives Sales</field>
+        <field eval="'ir.actions.report.xml,'+str(aeroo_representatives_sales_report_id)" name="value"/>
+        <field eval="True" name="isobject"/>
+        <field eval="True" name="replace"/>
+    </ir_set>
+
+
+    <record id="aeroo_ownership_contract_report_id" model="ir.actions.report.xml">
+        <field name="name">Ownership Contract</field>
+        <field name="type">ir.actions.report.xml</field>
+        <field name="model">ownership.contract</field>
+        <field name="report_name">ownership_contract</field>
+        <field name="report_type">aeroo</field>
+        <field name="in_format">oo-odt</field>
+        <field name="parser_loc">real_estate/report/parser.py</field>
+        <field name="report_rml">real_estate/report/templates/ownership_template.odt</field>
+        <field name="parser_state">loc</field>
+        <field name="tml_source">file</field>
+    </record>
+
+
+    <ir_set>
+        <field eval="'action'" name="key"/>
+        <field eval="'client_print_multi'" name="key2"/>
+        <field eval="['ownership.contract']" name="models"/>
+        <field name="name">Ownership Contract</field>
+        <field eval="'ir.actions.report.xml,'+str(aeroo_ownership_contract_report_id)" name="value"/>
+        <field eval="True" name="isobject"/>
+        <field eval="True" name="replace"/>
+    </ir_set>
+
+
+
+    <record id="aeroo_quittance_contract_report_id" model="ir.actions.report.xml">
+        <field name="name">Quittance Letter</field>
+        <field name="type">ir.actions.report.xml</field>
+        <field name="model">ownership.contract</field>
+        <field name="report_name">quittance_letter</field>
+        <field name="report_type">aeroo</field>
+        <field name="in_format">oo-odt</field>
+        <field name="parser_loc">real_estate/report/parser.py</field>
+        <field name="report_rml">real_estate/report/templates/quittance_template.odt</field>
+        <field name="parser_state">loc</field>
+        <field name="tml_source">file</field>
+    </record>
+
+
+    <ir_set>
+        <field eval="'action'" name="key"/>
+        <field eval="'client_print_multi'" name="key2"/>
+        <field eval="['ownership.contract']" name="models"/>
+        <field name="name">Quittance Letter</field>
+        <field eval="'ir.actions.report.xml,'+str(aeroo_quittance_contract_report_id)" name="value"/>
+        <field eval="True" name="isobject"/>
+        <field eval="True" name="replace"/>
+    </ir_set>
+
+        <record id="aeroo_due_payment_id" model="ir.actions.report.xml">
+            <field name="name">due_payment</field>
+            <field name="type">ir.actions.report.xml</field>
+            <field name="model">res.company</field>
+            <field name="report_name">due.payment</field>
+            <field name="report_type">aeroo</field>
+            <field name="in_format">oo-odt</field>
+            <field name="parser_state">loc</field>
+            <field name="parser_loc">real_estate/report/parser_due_payment.py</field>
+            <field name="tml_source">file</field>
+            <field name="report_rml">real_estate/report/templates/due_payment.odt</field>
+        </record>
+
+        <ir_set>
+            <field eval="'action'" name="key"/>
+            <field eval="'client_print_multi'" name="key2"/>
+            <field eval="['occupancy.check']" name="models"/>
+            <field name="name">due_payment</field>
+            <field eval="'ir.actions.report.xml,'+str(aeroo_due_payment_id)" name="value"/>
+            <field eval="True" name="isobject"/>
+            <field eval="True" name="replace"/>
+        </ir_set>
+
+        <record id="aeroo_late_payment_id" model="ir.actions.report.xml">
+            <field name="name">late_payment</field>
+            <field name="type">ir.actions.report.xml</field>
+            <field name="model">res.company</field>
+            <field name="report_name">late.payment</field>
+            <field name="report_type">aeroo</field>
+            <field name="in_format">oo-odt</field>
+            <field name="parser_state">loc</field>
+            <field name="parser_loc">real_estate/report/parser_late_payment.py</field>
+            <field name="tml_source">file</field>
+            <field name="report_rml">real_estate/report/templates/late_payment.odt</field>
+        </record>
+
+        <ir_set>
+            <field eval="'action'" name="key"/>
+            <field eval="'client_print_multi'" name="key2"/>
+            <field eval="['occupancy.check']" name="models"/>
+            <field name="name">late_payment</field>
+            <field eval="'ir.actions.report.xml,'+str(aeroo_late_payment_id)" name="value"/>
+            <field eval="True" name="isobject"/>
+            <field eval="True" name="replace"/>
+        </ir_set>
+
+
+        <record id="aeroo_late_payment_unit_id" model="ir.actions.report.xml">
+            <field name="name">late_payment_unit</field>
+            <field name="type">ir.actions.report.xml</field>
+            <field name="model">res.company</field>
+            <field name="report_name">late.payment.unit</field>
+            <field name="report_type">aeroo</field>
+            <field name="in_format">oo-odt</field>
+            <field name="parser_state">loc</field>
+            <field name="parser_loc">real_estate/report/parser_late_payment_unit.py</field>
+            <field name="tml_source">file</field>
+            <field name="report_rml">real_estate/report/templates/late_payment_unit.odt</field>
+        </record>
+
+        <ir_set>
+            <field eval="'action'" name="key"/>
+            <field eval="'client_print_multi'" name="key2"/>
+            <field eval="['occupancy.check']" name="models"/>
+            <field name="name">late_payment_unit</field>
+            <field eval="'ir.actions.report.xml,'+str(aeroo_late_payment_unit_id)" name="value"/>
+            <field eval="True" name="isobject"/>
+            <field eval="True" name="replace"/>
+        </ir_set>
+
+        <record id="aeroo_due_payment_unit_id" model="ir.actions.report.xml">
+            <field name="name">due_payment_unit</field>
+            <field name="type">ir.actions.report.xml</field>
+            <field name="model">res.company</field>
+            <field name="report_name">due.payment.unit</field>
+            <field name="report_type">aeroo</field>
+            <field name="in_format">oo-odt</field>
+            <field name="parser_state">loc</field>
+            <field name="parser_loc">real_estate/report/parser_due_payment_unit.py</field>
+            <field name="tml_source">file</field>
+            <field name="report_rml">real_estate/report/templates/due_payment_unit.odt</field>
+        </record>
+
+        <ir_set>
+            <field eval="'action'" name="key"/>
+            <field eval="'client_print_multi'" name="key2"/>
+            <field eval="['occupancy.check']" name="models"/>
+            <field name="name">due_payment_unit</field>
+            <field eval="'ir.actions.report.xml,'+str(aeroo_due_payment_unit_id)" name="value"/>
+            <field eval="True" name="isobject"/>
+            <field eval="True" name="replace"/>
+        </ir_set>
+
+        <record id="aeroo_occupancy_id" model="ir.actions.report.xml">
+            <field name="name">Occupancy Rate</field>
+            <field name="type">ir.actions.report.xml</field>
+            <field name="model">occupancy.check</field>
+            <field name="report_name">occupancy</field>
+            <field name="report_type">aeroo</field>
+            <field name="in_format">oo-odt</field>
+            <field name="parser_state">loc</field>
+            <field name="parser_loc">real_estate/report/parser_occupancy.py</field>
+            <field name="tml_source">file</field>
+            <field name="report_rml">real_estate/report/templates/occupancy.odt</field>
+        </record>
+        <ir_set>
+            <field eval="'action'" name="key"/>
+            <field eval="'client_print_multi'" name="key2"/>
+            <field eval="['occupancy.check']" name="models"/>
+            <field name="name">occupancy</field>
+            <field eval="'ir.actions.report.xml,'+str(aeroo_occupancy_id)" name="value"/>
+            <field eval="True" name="isobject"/>
+            <field eval="True" name="replace"/>
+        </ir_set>
+
+    <record id="aeroo_unit_reservation_report_id" model="ir.actions.report.xml">
+        <field name="name">Unit Reservation</field>
+        <field name="type">ir.actions.report.xml</field>
+        <field name="model">unit.reservation</field>
+        <field name="report_name">unit_reservation</field>
+        <field name="report_type">aeroo</field>
+        <field name="in_format">oo-odt</field>
+        <field name="parser_loc">real_estate/report/parser.py</field>
+        <field name="report_rml">real_estate/report/templates/reservation_template.odt</field>
+        <field name="parser_state">loc</field>
+        <field name="tml_source">file</field>
+    </record>
+
+
+    <ir_set>
+        <field eval="'action'" name="key"/>
+        <field eval="'client_print_multi'" name="key2"/>
+        <field eval="['unit.reservation']" name="models"/>
+        <field name="name">Unit Reservation</field>
+        <field eval="'ir.actions.report.xml,'+str(aeroo_unit_reservation_report_id)" name="value"/>
+        <field eval="True" name="isobject"/>
+        <field eval="True" name="replace"/>
+    </ir_set>
+
+    <record id="aeroo_rental_contract_report_id" model="ir.actions.report.xml">
+        <field name="name">rental Contract</field>
+        <field name="type">ir.actions.report.xml</field>
+        <field name="model">rental.contract</field>
+        <field name="report_name">rental_contract</field>
+        <field name="report_type">aeroo</field>
+        <field name="in_format">oo-odt</field>
+        <field name="parser_loc">real_estate/report/parser.py</field>
+        <field name="report_rml">real_estate/report/templates/rental_template.odt</field>
+        <field name="parser_state">loc</field>
+        <field name="tml_source">file</field>
+    </record>
+
+
+    <ir_set>
+        <field eval="'action'" name="key"/>
+        <field eval="'client_print_multi'" name="key2"/>
+        <field eval="['rental.contract']" name="models"/>
+        <field name="name">Rental Contract</field>
+        <field eval="'ir.actions.report.xml,'+str(aeroo_rental_contract_report_id)" name="value"/>
+        <field eval="True" name="isobject"/>
+        <field eval="True" name="replace"/>
+    </ir_set>
+
+    <record id="aeroo_unit_release_report_id" model="ir.actions.report.xml">
+        <field name="name">Unit Release</field>
+        <field name="type">ir.actions.report.xml</field>
+        <field name="model">unit.release</field>
+        <field name="report_name">unit_release</field>
+        <field name="report_type">aeroo</field>
+        <field name="in_format">oo-odt</field>
+        <field name="parser_loc">real_estate/report/parser.py</field>
+        <field name="report_rml">real_estate/report/templates/release_template.odt</field>
+        <field name="parser_state">loc</field>
+        <field name="tml_source">file</field>
+    </record>
+    <ir_set>
+        <field eval="'action'" name="key"/>
+        <field eval="'client_print_multi'" name="key2"/>
+        <field eval="['unit.release']" name="models"/>
+        <field name="name">Unit Release</field>
+        <field eval="'ir.actions.report.xml,'+str(aeroo_unit_release_report_id)" name="value"/>
+        <field eval="True" name="isobject"/>
+        <field eval="True" name="replace"/>
+    </ir_set>
+	-->
+</data>
+</odoo>
+

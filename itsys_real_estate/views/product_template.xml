@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+        <!-- Add css/js for multiple image feature -->
+        <template id="itsys_real_estate_frontend" inherit_id="website.assets_frontend" name="Product Multiple Image Effect">
+            <xpath expr="." postion="inside">
+                <link href="/itsys_real_estate/static/src/css/unite-gallery.css" rel="stylesheet"/>
+                <link href='/itsys_real_estate/static/src/skins/alexis/alexis.css' rel="stylesheet"/>
+                <link href="/itsys_real_estate/static/src/css/image_effect.css" rel="stylesheet"/>
+
+                <script src="/itsys_real_estate/static/src/js/unitegallery.min.js" type="text/javascript"/>
+                <script src="/itsys_real_estate/static/src/js/ug-theme-compact.js" type="text/javascript"/>
+                <script src="/itsys_real_estate/static/src/js/itsys_real_estate.js" type="text/javascript"/>
+            </xpath>
+        </template>
+
+        <template id="products_list" inherit_id="website_sale.products_item" name="Products">
+            <xpath expr="//div[@itemscope='itemscope']//section//div[@itemprop='offers']" position="attributes">
+                <attribute name="style">display:none;</attribute>
+            </xpath>
+        </template>
+        <!-- Inherit template for Add multiple images in product details page & zooming feature -->
+        <template customize_show="True" id="website_multiple_image_product_slider" inherit_id="website_sale.product" name="Website Multi-Image Product">
+
+            <xpath expr="//section[@id='product_detail']//span[@itemprop='image']" position="attributes">
+                <attribute name="style">display:none;</attribute>
+            </xpath>
+
+            <xpath expr="//section[@id='product_detail']//ol[@class='breadcrumb']" position="attributes">
+                <attribute name="style">display:none;</attribute>
+            </xpath>
+
+                <xpath expr="//section[@id='product_detail']//div[@id='product_details']" position="replace">
+                        <div class="col-sm-5 col-lg-4 col-lg-offset-1" id="product_details">
+                            <h1 itemprop="name" t-field="product.name">Product Name</h1>
+                            <span itemprop="url" style="display:none;" t-esc="'%sshop/product/%s' % (request.httprequest.url_root, slug(product))"/>
+                            <t t-if="not product.is_property">
+                                <form action="/shop/cart/update" class="js_add_cart_variants" method="POST">
+                                    <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()" />
+                                    <div class="js_product" t-if="product.product_variant_ids">
+                                        <t t-placeholder="select">
+                                            <input type="hidden" class="product_id" name="product_id" t-att-value="product.product_variant_id.id if len(product.product_variant_ids) == 1 else '0'" />
+                                            <t t-call="website_sale.variants">
+                                                <t t-set="ul_class" t-value="'nav-stacked'" />
+                                            </t>
+                                        </t>
+                                        <t t-call="website_sale.product_price" />
+                                        <p t-if="len(product.product_variant_ids) &gt; 1" class="css_not_available_msg bg-danger" style="padding: 15px;">This combination does not exist.</p>
+                                        <div class="css_quantity input-group oe_website_spinner" contenteditable="false">
+                                            <a t-attf-href="#" class="mb8 input-group-addon js_add_cart_json">
+                                                <i class="fa fa-minus"></i>
+                                            </a>
+                                            <input type="text" class="form-control quantity" data-min="1" name="add_qty" value="1"/>
+                                            <a t-attf-href="#" class="mb8 input-group-addon float_left js_add_cart_json">
+                                                <i class="fa fa-plus"></i>
+                                            </a>
+                                        </div>
+                                        <a id="add_to_cart" class="btn btn-primary btn-lg mt8 js_check_product a-submit" href="#">Add to Cart</a>
+                                    </div>
+                                </form>
+                            </t>
+                            <hr t-if="product.description_sale" />
+                            <div class="o_not_editable">
+                                <p t-field="product.description_sale" class="text-muted" />
+                            </div>
+
+                            <t t-if="not product.is_property">
+                                <hr />
+                                <p class="text-muted">
+                                  30-day money-back guarantee<br />
+                                  Free Shipping in U.S.<br />
+                                  Buy now, get in 2 days
+                                </p>
+                            </t>
+                            <t t-if="product.is_property">
+                                <hr />
+                                <p class="text-muted">
+                                    <span t-field="product.status"/><br />
+                                    <span t-field="product.desc"/><br />
+                                </p>
+                            </t>
+                        </div>
+                </xpath>
+
+            <xpath expr="//section[@id='product_detail']//div[@id='o-carousel-product']" position="attributes">
+                <attribute name="style">display:none;</attribute>
+            </xpath>
+
+            <xpath expr="//section[@id='product_detail']//span[@itemprop='image']" position="before">
+                <t t-set='get_multiple_images' t-value="website.get_multiple_images(product.id)"/>
+                
+                <t t-if="not product.multi_image">
+                    <span itemprop="image" t-attf-content="{{request.httprequest.url_root}}web/image/product.template/{{product.id}}/image" t-field="product.image" 
+                    t-options="{'widget': 'image', 'class': 'product_detail_img', 'alt-field': 'name', 'zoom': 'image'}" />
+                </t>
+
+                <t t-if="product.multi_image and get_multiple_images">
+                    <span itemprop="image">
+                        <div id="gallery">
+                            <img class="img img-responsive product_detail_img"
+                                 t-att-alt="product.name"
+                                 t-att-title="product.name"
+                                 t-att-src="website.image_url(product, 'image')"
+                                 t-att-data-image="website.image_url(product, 'image')"/>
+                            <t t-as="im" t-foreach="get_multiple_images">
+                                <t t-if="im.attach_type == 'image'">
+                                    <img t-att-src="website.image_url(im, 'image')"
+                                         t-att-alt="im.alt if im.alt else im.name"
+                                         t-att-data-image="website.image_url(im, 'image')"
+                                         t-att-title="im.name if im.name else product.name"/>
+                                </t>
+                                <t t-if="im.attach_type == 'video'">
+                                    <t t-if="im.video_type == 'youtube'">
+                                        <img t-att-alt="im.alt if im.alt else im.name"
+                                             data-type="youtube"
+                                             t-att-data-videoid="im.video_id"
+                                             t-att-data-description="im.name if im.name else product.name"/>
+                                     </t>
+                                     <t t-if="im.video_type == 'vimeo'">
+                                        <img t-att-alt="im.alt if im.alt else im.name"
+                                             data-type="vimeo"
+                                             t-att-src="website.image_url(im, 'cover_image') if im.cover_image else website.image_url(im, 'image')"
+                                             t-att-data-image="website.image_url(im, 'cover_image') if im.cover_image else website.image_url(im, 'image')"
+                                             t-att-data-videoid="im.video_id"
+                                             t-att-data-description="im.name if im.name else product.name"/>
+                                     </t>
+                                     <t t-if="im.video_type == 'html5video'">
+                                        <img data-type="html5video"
+                                             t-att-alt="im.alt if im.alt else im.name"
+                                             t-att-src="website.image_url(im, 'cover_image') if im.cover_image else website.image_url(im, 'image')"
+                                             t-att-data-image="website.image_url(im, 'cover_image') if im.cover_image else website.image_url(im, 'image')"
+                                             t-att-data-videoogv="im.video_ogv if im.video_ogv else '' "
+                                             t-att-data-videowebm="im.video_webm if im.video_webm else '' "
+                                             t-att-data-videomp4="im.video_mp4 if im.video_mp4 else '' "
+                                             t-att-data-description="im.name if im.name else product.name"/>
+                                     </t>
+                                </t>
+                            </t>
+                        </div>
+                    </span>
+                </t>
+                <t t-if="product.multi_image and not get_multiple_images">
+                    <span itemprop="image" t-attf-content="{{request.httprequest.url_root}}web/image/product.template/{{product.id}}/image" t-field="product.image" 
+                    t-options="{'widget': 'image', 'class': 'product_detail_img', 'alt-field': 'name', 'zoom': 'image'}" />
+                </t>
+            </xpath>
+        </template>
+</odoo>

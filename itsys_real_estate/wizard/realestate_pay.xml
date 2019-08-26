@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <odoo>
+        <data>
+            <record id="customer_payment_form_view" model="ir.ui.view">
+                <field name="name">customer.payment.check</field>
+                <field name="model">customer.payment.check</field>
+                <field name="arch" type="xml">
+                    <form string="Report Options" version="7.0">
+                     <sheet>
+                     <group>                 
+                            <field name="payment_method" invisible="1"/>
+                            <field name="account" invisible="1" />
+                            <field name="journal" domain="[('type', 'in', ['bank','cash'])]" />
+                            <field name="cheque_number" invisible="1" attrs="{'required':[('payment_method','=', 'cheque')],'invisible':[('payment_method','=','cash')]}"/>                            
+                            <field name="partner" />
+                            <field name="contract" />
+                       </group>
+                       <group>
+                       <field name="select_all" />
+                       </group>
+                       <field name="loan_line" string="Installments">
+                            <tree string="Installments" editable="bottom">
+                                <field name="installment_line_id" invisible="1"/>                        
+                                <field name="to_be_paid"/>                        
+                                <field name="date" />
+                                <field name="name"/>
+                                <field name="amount" required="1"/>
+                                <field name="discount_cash" attrs="{'readonly': [('discount_percent','>', '0')]}" />
+                                <field name="discount_percent" attrs="{'readonly': [('discount_cash','>', '0')]}"/>
+                                <field name="empty_col"/>
+                                <field name="empty_col"/>
+                                <field name="empty_col"/>
+                                <field name="empty_col"/>
+                            </tree>
+                       </field>                                  
+                    <group>
+                            <field name="discount_cash_total" attrs="{'readonly': [('discount_percent_total','>', '0')]}"/>
+                            <field name="discount_percent_total" attrs="{'readonly': [('discount_cash_total','>', '0')]}"/>                        
+                    </group>
+                        <footer>
+                            <button name="pay" string="Register Payment" type="object" default_focus="1" class="oe_highlight"/>                                                        
+                            <button string="Cancel" class="oe_link" special="cancel"/>
+                        </footer>
+                     </sheet>
+                    </form>
+                </field>
+            </record>
+            <record id="action_customer_payment_check" model="ir.actions.act_window">
+                <field name="name">Customer Payment</field>
+                <field name="type">ir.actions.act_window</field>
+                <field name="res_model">customer.payment.check</field>
+                <field name="view_type">form</field>
+                <field name="view_mode">form</field>
+                <field name="target">new</field>
+            </record>
+        </data>
+    </odoo>
+

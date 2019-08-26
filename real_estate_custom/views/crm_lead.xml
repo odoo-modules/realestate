@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- Inherit Form View to Modify it -->
+        <record id="crm_case_form_view_oppor" model="ir.ui.view">
+            <field name="name">crm.lead.form</field>
+            <field name="model">crm.lead</field>
+            <field name="inherit_id" ref="crm.crm_case_form_view_oppor"/>
+            <field name="arch" type="xml">
+                <xpath expr="//button[@name='action_schedule_meeting']" position="after">
+                    <button class="oe_stat_button" type="object"
+                            name="action_open_reservation" icon="fa-pencil-square-o"
+                            context="{'create':False,'edit':False}">
+                        <div class="o_stat_info">
+                            <field name="reservation_count" class="o_stat_value"/>
+                            <span class="o_stat_text" attrs="{'invisible': [('reservation_count', '&lt;', 2)]}">
+                                Reservation
+                            </span>
+                            <span class="o_stat_text" attrs="{'invisible': [('reservation_count', '&gt;', 1)]}">
+                                Reservations
+                            </span>
+                        </div>
+                    </button>
+                </xpath>
+                <xpath expr="//button[@name='action_set_won_rainbowman']" position="before">
+                    <field name="unit_state" invisible="1"/>
+                    <button name="action_create_reservation" type="object" class="oe_highlight"
+                            string="New Reservation"
+                            attrs="{'invisible':['|',('unit_id','=',False),('unit_state','!=','free')]}"/>
+                </xpath>
+                <xpath expr="//field[@name='date_deadline']" position="before">
+                    <field name="building_id" options="{'no_create':True,'no_edit':True}"/>
+                    <field name="unit_id" context="{'form_view_ref':'itsys_real_estate.building_unit_form'}"/>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>

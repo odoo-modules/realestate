@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record model="ir.ui.view" id="building_unit_form">
+            <field name="name">property.form</field>
+            <field name="priority" eval="10"/>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="itsys_real_estate.building_unit_form"/>
+
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='building_area']" position="after">
+                    <field name="price_per_meter"/>
+                </xpath>
+                <xpath expr="//button[@name='view_reservations']" position="attributes">
+                    <attribute name="context">
+                        {'default_account_income':account_income,'default_account_analytic_id':account_analytic_id}
+                    </attribute>
+                </xpath>
+                <xpath expr="//field[@name='country_id']" position="after">
+                    <field name="account_income" required="1"/>
+                    <field name="account_analytic_id" required="1"/>
+                    <field name="currency_id" invisible="1"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

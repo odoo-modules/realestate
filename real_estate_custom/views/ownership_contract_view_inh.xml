@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="ownership_contract_form_view" model="ir.ui.view">
+            <field name="name">ownership.contract.form</field>
+            <field name="model">ownership.contract</field>
+            <field name="inherit_id" ref="itsys_real_estate.ownership_contract_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='pricing']" position="replace">
+                    <field name="pricing" readonly=""/>
+                    <field name="currency_id" invisible="1"/>
+                    <field name="reservation_amount" readonly="1"/>
+                </xpath>
+
+                <xpath expr="//field[@name='building_unit']" position="replace">
+                    <field name="building_unit" context="{'form_view_ref':'itsys_real_estate.building_unit_form'}"/>
+                </xpath>
+                <xpath expr="//field[@name='loan_line']" position="replace">
+                    <field name="loan_line">
+                        <tree string="Installments" editable="bottom">
+                            <field name="serial" widget="handle" required="1"
+                                   attrs="{'readonly': [('paid','=',True)]}"/>
+                            <field name="date" required="1" attrs="{'readonly': [('paid','=',True)]}"/>
+                            <field name="name" required="1" attrs="{'readonly': [('paid','=',True)]}"/>
+                            <field name="amount" required="1" attrs="{'readonly': [('paid','=',True)]}"
+                                   string="Amount"/>
+                            <field name="due_amount" required="1" attrs="{'readonly': [('paid','=',True)]}"/>
+                            <field name="paid" readonly="1"/>
+                        </tree>
+                    </field>
+                </xpath>
+
+
+            </field>
+        </record>
+    </data>
+</odoo>

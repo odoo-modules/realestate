@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>                             
+        <menuitem id="real_estate_report_menu" name="Reports" parent="itsys_real_estate.menu_itsys_real_estate" groups="group_real_estate_reports" sequence="400"/>
+        <menuitem name="Due Payments for Partners" parent="real_estate_report_menu" id="due_payment_menu" groups="group_real_estate_reports" action="action_due_payment_check" /> 
+        <menuitem name="Due Payments for Units" parent="real_estate_report_menu" id="due_payment_unit_menu" groups="group_real_estate_reports" action="action_due_payment_unit_check" /> 
+        <menuitem name="Late Payments for Partners" parent="real_estate_report_menu" id="late_payment_menu" groups="group_real_estate_reports" action="action_late_payment_check" /> 
+        <menuitem name="Late Payments for Units" parent="real_estate_report_menu" id="late_payment_unit_menu" groups="group_real_estate_reports" action="action_late_payment_unit_check" /> 
+       <menuitem name="Occupancy rates" parent="real_estate_report_menu" id="empty_units_menu" groups="group_real_estate_reports" action="action_empty_units_check" />
+       <menuitem name="Representatives Sales" parent="real_estate_report_menu" id="salesperson_sales" groups="group_real_estate_reports" action="action_salesperson_sales_check" />              
+    </data>
+</odoo>

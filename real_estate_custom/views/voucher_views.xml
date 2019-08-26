@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="voucher_inherit_view" model="ir.ui.view">
+            <field name="name">voucher_inherit_view</field>
+            <field name="model">account.voucher</field>
+            <field name="inherit_id" ref="account_voucher.view_purchase_receipt_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='reference']" position="after">
+                    <field name="contract_unit"/>
+                    <field name="contract_building"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

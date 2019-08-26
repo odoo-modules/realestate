@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>         
+        <!-- countries -->
+        <record id="countries_tree_view" model="ir.ui.view">
+            <field name="name">countries.tree</field>
+            <field name="model">countries</field>
+            <field name="arch" type="xml">
+                <tree string="countries">
+                    <field name="name"/>
+                    <field name="population_density"/>  
+                    <field name="land_area"/>  
+                </tree>
+            </field>
+        </record>
+        <record id="countries_form_view" model="ir.ui.view">
+            <field name="name">countries.form</field>
+            <field name="model">countries</field>
+            <field name="arch" type="xml">
+                <form string="countries">
+                    <sheet>
+                        <group>
+                            <field name="name" required="1"/>   
+                    	    <field name="population_density"/>  
+                            <field name="land_area"/>                          
+                        </group>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+        <record id="countries_form_action" model="ir.actions.act_window">
+            <field name="name">Countries</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">countries</field>
+            <field name="view_type">form</field>
+            <field name="view_id" ref="countries_tree_view"/>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click to add a new country
+              </p>
+            </field>
+        </record>
+        <menuitem action="countries_form_action" id="menu_countries_form_action" parent="itsys_real_estate.menu_building_list" sequence="0" />
+
+    </data>
+</odoo>

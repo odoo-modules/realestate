@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<template id="report_sales_rep">
+			<t t-call="web.html_container">
+				<t t-call="web.internal_layout">
+					<div class="page">
+						<style type="text/css">
+							table.gridtable td, th {
+							border: 1px solid #ddd;
+							text-align: left;
+							}
+
+							table.gridtable {
+							border-collapse: collapse;
+							width: 100%;
+							}
+
+							table.gridtable th, td {
+							padding: 5px;
+							}
+							table.report_table {
+							font-size: 14px !important;
+							border-collapse: collapse !important;
+							width: 100% !important;
+							}
+
+							table.report_table th, table.report_table td {
+							padding: 8px !important;
+							text-align: center !important;
+							}
+
+							table.report_table tr:nth-child(even){background-color: #f2f2f2 !important;}
+
+							table.report_table th {
+							background-color: #000080 !important;
+							color: white !important;
+							}
+
+						</style>
+						<h2>Details of Sales</h2>
+						<table class="gridtable">
+							<tr>
+								<th align="center">Date From:</th>
+								<th align="center">Date To:</th>
+							</tr>
+							<tr>
+								<td align="center"><span t-esc="date_from"/></td>
+								<td align="center"><span t-esc="date_to"/></td>
+							</tr>
+						</table>
+						<br/>
+						<table class="report_table">
+							<tr>
+								<th>Sales Person</th>
+								<th>Contract</th>
+								<th>Contract Date</th>
+								<th>Unit</th>
+								<th>Building</th>
+								<th>Region</th>
+								<th>City</th>
+								<th>Contract Total</th>
+								<th>Paid Amount</th>
+								<th>Balance</th>
+							</tr>
+							<t t-foreach="get_lines" t-as="salesperson">
+								<tr t-foreach="salesperson['lines']" t-as="line">
+									<td><span t-esc="line[0]"/></td>
+									<td><span t-esc="line[1]"/></td>
+									<td><span t-esc="line[2]"/></td>
+									<td><span t-esc="line[6]"/></td>
+									<td><span t-esc="line[5]"/></td>
+									<td><span t-esc="line[4].name"/></td>
+									<td><span t-esc="line[3].name"/></td>
+									<td><span t-esc="round(line[7],2)"/></td>
+									<td><span t-esc="round(line[8],2)"/></td>
+									<td><span t-esc="round(line[9],2)"/></td>
+								</tr>
+								<tr style="background-color: #bdbebf !important;">
+									<td colspan="7"></td>
+									<td><span t-esc="round(salesperson['totals'][0],2)"/></td>
+									<td><span t-esc="round(salesperson['totals'][1],2)"/></td>
+									<td><span t-esc="round(salesperson['totals'][2],2)"/></td>
+								</tr>
+							</t>
+							<t t-foreach="get_total" t-as="total">
+								<tr>
+									<th colspan="7" style="text-align:right">Totals</th>
+									<th><span style="color: white !important;" t-esc="round(total[0],2)"/></th>
+									<th><span style="color: white !important;" t-esc="round(total[1],2)"/></th>
+									<th><span style="color: white !important;" t-esc="round(total[2],2)"/></th>
+								</tr>
+							</t>
+						</table>
+					</div>
+				</t>
+			</t>
+		</template>
+
+	</data>
+</odoo>
+
+

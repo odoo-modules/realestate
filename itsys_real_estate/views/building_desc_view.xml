@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>    
+        <!-- Building Description -->
+        <record id="building_desc_tree_view" model="ir.ui.view">
+            <field name="name">building.desc.tree</field>
+            <field name="model">building.desc</field>
+            <field name="arch" type="xml">
+                <tree string="Building desc">
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+        <record id="building_desc_form_view" model="ir.ui.view">
+            <field name="name">building.desc.form</field>
+            <field name="model">building.desc</field>
+            <field name="arch" type="xml">
+                <form string="Building desc">
+                    <sheet>                    
+                    <group>
+                        <field name="name"/>                           
+                    </group>
+                    </sheet>                    
+                </form>
+            </field>
+        </record>
+        <record id="building_desc_form_action" model="ir.actions.act_window">
+            <field name="name">Building Description</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">building.desc</field>
+            <field name="view_type">form</field>
+            <field name="view_id" ref="building_desc_tree_view"/>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click to add a new Building Description
+              </p>
+            </field>
+        </record>
+        <menuitem action="building_desc_form_action" id="menu_building_desc_form_action" parent="itsys_real_estate.menu_settings" sequence="30" />
+            
+    </data>
+</odoo>

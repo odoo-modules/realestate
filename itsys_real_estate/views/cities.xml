@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Cities -->
+        <record id="cities_tree_view" model="ir.ui.view">
+            <field name="name">cities.tree</field>
+            <field name="model">cities</field>
+            <field name="arch" type="xml">
+                <tree string="Cities">
+                    <field name="complete_name"/>
+                    <field name="country_id"/>
+                    <field name="population_density"/>
+                    <field name="land_area"/>
+                    <field name="type"/>
+                </tree>
+            </field>
+        </record>
+        <record id="cities_form_view" model="ir.ui.view">
+            <field name="name">cities.form</field>
+            <field name="model">cities</field>
+            <field name="arch" type="xml">
+                <form string="Cities">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="name" required="1"/>
+                                <field name="country_id"/>
+                                <field name="city_id"/>
+                                <field name="population_density"/>
+                                <field name="land_area"/>
+                                <field name="type"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Geolocation">
+                                <group>
+                                    <field name="latlng_ids" >
+                                        <tree editable="bottom">
+                                            <field name="lat" />
+                                            <field name="lng" />
+                                            <field name="url" />
+                                            <field name="unit_id" />
+                                            <field name="state" />
+                                        </tree>
+                                    </field>
+                                    <field name="map" invisible="1" widget="place_autocomplete_multi" class="oe_inline" />
+                                </group>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+        <record id="view_cities_search" model="ir.ui.view">
+            <field name="name">cities.search</field>
+            <field name="model">cities</field>
+            <field name="arch" type="xml">
+                <search string="Cities">
+                    <group expand="1" string="Group By">
+                        <filter string="Country" icon="terp-stock_effects-object-colorize" domain="[]" context="{'group_by':'country_id'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record id="cities_form_action" model="ir.actions.act_window">
+            <field name="name">Cities</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">cities</field>
+            <field name="view_type">form</field>
+            <field name="view_id" ref="cities_tree_view"/>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Click to add a new city
+                </p>
+            </field>
+            <field name="search_view_id" ref="view_cities_search"/>
+        </record>
+        <menuitem action="cities_form_action" id="menu_cities_form_action" parent="itsys_real_estate.menu_building_list" sequence="1" />
+
+        <!-- cities.type -->
+        <record id="cities_type_tree_view" model="ir.ui.view">
+            <field name="name">cities.type.tree</field>
+            <field name="model">cities.type</field>
+            <field name="arch" type="xml">
+                <tree string="cities.type">
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+        <record id="cities_type_form_view" model="ir.ui.view">
+            <field name="name">cities.type.form</field>
+            <field name="model">cities.type</field>
+            <field name="arch" type="xml">
+                <form string="City type">
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record id="cities_type_form_action" model="ir.actions.act_window">
+            <field name="name">City Type</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">cities.type</field>
+            <field name="view_type">form</field>
+            <field name="view_id" ref="cities_type_tree_view"/>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Click to add a new city type
+                </p>
+            </field>
+        </record>
+        <menuitem action="cities_type_form_action" id="menu_cities_type_form_action" parent="itsys_real_estate.menu_settings" sequence="100" />
+
+    </data>
+</odoo>

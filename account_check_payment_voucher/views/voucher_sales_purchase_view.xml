@@ -1,0 +1,79 @@
+<?xml version="1.0"?>
+<odoo>
+    <data>
+
+        <record id="view_sale_receipt_form_inherit_payment_check" model="ir.ui.view">
+            <field name="name">view.account.voucher.form.inherit.payment.check</field>
+            <field name="model">account.voucher</field>
+            <field name="inherit_id" ref="account_voucher.view_sale_receipt_form"/>
+            <field name="arch" type="xml">
+                
+                <field name="paid" position="after">
+                    <field name="hide_check_payment"/>
+                </field>
+                <xpath expr="//form/sheet/notebook" position="inside">
+                    <page string="Check Information"  attrs="{'invisible': [('hide_check_payment', '=', True)]}">
+                        <field name="check_payment_transaction_ids" nolabel="1" widget="one2many_list" mode="tree,kanban"
+                            context="{'default_amount': amount, 'default_currency_id': currency_id, 
+                                'default_partner_id': partner_id, 'default_journal_id': journal_id}">
+                            <tree string="Check Information" editable="bottom">
+
+                                <field name="check_name"/>
+                                <field name="check_number"/>
+                                <field name="check_payment_date"/>
+                                <field name="amount"/>
+                                <field name="check_issue_date"/>
+                                <field name="bank_id" options="{'no_open': True, 'no_create': True}"/>
+
+                                <field name="partner_id"  options="{'no_open': True, 'no_create': True}" invisible="1"/>
+                                <field name="currency_id" options="{'no_open': True, 'no_create': True}"  groups="base.group_multi_currency"/>
+                                <field name="journal_id"  options="{'no_open': True, 'no_create': True}" widget="selection" invisible="1"/>
+
+                                <field name="state" invisible="1"/>
+                                <field name="payment_type" invisible="1"/>
+
+                            </tree>
+                        </field>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="view_purchase_receipt_form_inherited_check" model="ir.ui.view">
+            <field name="name">account.voucher.invoice.form.inherited.check</field>
+            <field name="model">account.voucher</field>
+            <field name="inherit_id" ref="account_voucher.view_purchase_receipt_form" />
+            <field name="arch" type="xml">
+                <field name="paid" position="after">
+                    <field name="hide_check_payment" />
+                </field>
+                <xpath expr="//form/sheet/notebook" position="inside">
+                    <page string="Check Information"  attrs="{'invisible': [('hide_check_payment', '=', True)]}">
+                        <field name="check_payment_transaction_ids" nolabel="1" widget="one2many_list" mode="tree,kanban"
+                            context="{'default_amount': amount, 'default_currency_id': currency_id, 
+                                'default_partner_id': partner_id, 'default_journal_id': journal_id}">
+                            <tree string="Check Information" editable="bottom">
+
+                                <field name="check_name"/>
+                                <field name="check_number"/>
+                                <field name="check_payment_date"/>
+                                <field name="amount"/>
+                                <field name="check_issue_date"/>
+                                <field name="bank_id" options="{'no_open': True, 'no_create': True}"/>
+
+                                <field name="partner_id"  options="{'no_open': True, 'no_create': True}" invisible="1"/>
+                                <field name="currency_id" options="{'no_open': True, 'no_create': True}"  groups="base.group_multi_currency"/>
+                                <field name="journal_id"  options="{'no_open': True, 'no_create': True}" widget="selection" invisible="1"/>
+
+                                <field name="state" invisible="1"/>
+                                <field name="payment_type" invisible="1"/>
+
+                            </tree>
+                        </field>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>

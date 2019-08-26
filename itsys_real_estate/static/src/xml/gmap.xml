@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<template>
+    <t t-name="google_map">
+		<button class="btn btn-default map-toggle" style="width: 32px; height: 26px; text-align: center; padding: 0; float: right;">
+			<img style="width: 16px;" src="/itsys_real_estate/static/src/img/marker.png"/>
+		</button>
+		<div class='gmap-container'
+			 style=" height: 250px; width: 100%; border-radius: 4px; position: fixed; z-index:999; display: none;"/>
+	</t>
+    <t t-name="google_map_multi">
+		<button class="btn btn-default map-toggle" style="width: 32px; height: 26px; text-align: center; padding: 0; float: right;">
+			<img style="width: 16px;" src="/itsys_real_estate/static/src/img/marker.png"/>
+		</button>
+		<div class='gmap-container-multi'
+			 style=" height: 250px; width: 100%; border-radius: 4px; position: fixed; z-index:999; display: none;"/>
+	</t>
+</template>

@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="cust_notify_tree_view" model="ir.ui.view">
+            <field name="name">cust.notify.tree</field>
+            <field name="model">loan.line.rs.own</field>
+            <field name="arch" type="xml">
+                <tree string="Notifications (Ownership Contracts)" create="false" edit="false">
+                    <field name="name"/>
+                    <field name="date"/>
+                    <field name="contract_partner_id"/>
+                    <field name="contract_building"/>
+                    <field name="contract_building_unit" options="{'no_create': True, 'no_open': True}"/>
+                    <field name="loan_id"/>
+                    <field name="amount"/>
+                </tree>
+            </field>
+        </record>
+        <record id="cust_notify_form_view" model="ir.ui.view">
+            <field name="name">cust.notify.form</field>
+            <field name="model">loan.line.rs.own</field>
+            <field name="arch" type="xml">
+                <form string="Notifications (Ownership Contracts)" create="false" edit="false">
+                    <group>
+                        <field name="name"/>
+                        <field name="date"/>
+                        <field name="contract_partner_id"/>
+                        <field name="contract_building"/>
+                        <field name="contract_building_unit" options="{'no_create': True, 'no_open': True}"/>
+                        <field name="loan_id"/>
+                        <field name="amount"/>
+                    </group>
+                </form>
+            </field>
+        </record>
+        <record id="building_loan_line_rs" model="ir.ui.view">
+            <field name="name">loan.line.rs.own.list.filter</field>
+            <field name="model">loan.line.rs.own</field>
+            <field name="type">search</field>
+            <field name="arch" type="xml">
+                <search string="Top Search">
+                    <filter string="Today" name="due_today"
+                            domain="[('date', '=', context_today().strftime('%Y-%m-%d'))]"/>
+                    <filter string="Due in 7 days" name="due_week"
+                            domain="['&amp;', ('date', '&gt;=', context_today().strftime('%Y-%m-%d')),
+                                     ('date', '&lt;=', (context_today()+datetime.timedelta(days=7)).strftime('%Y-%m-%d'))
+                            ]"/>
+                    <separator/>
+                    <group expand="0" string="Group By...">
+                        <filter string="Date" domain="[]"  context="{'group_by':'date'}"/>
+                        <filter string="Partner" domain="[]"  context="{'group_by':'contract_partner_id'}"/>
+                        <filter string="Unit" domain="[]"  context="{'group_by':'contract_building_unit'}"/>
+                        <filter string="Building" domain="[]"  context="{'group_by':'contract_building_unit'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="loan_line_rs_own_calendar_view">
+            <field name="name">Unpaid Installments</field>
+            <field name="model">loan.line.rs.own</field>
+            <field name="priority" eval="2"/>
+            <field name="arch" type="xml">
+                <calendar string="Unpaid Installments" date_start="date" color="contract_partner_id">
+                    <field name="date"/>
+                </calendar>
+            </field>
+        </record>
+
+        <record id="cust_notify_form_action" model="ir.actions.act_window">
+            <field name="name">Ownership Contracts</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">loan.line.rs.own</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">calendar,tree,form</field>
+            <field name="domain">[('paid', '=', False)]</field>
+            <field name="view_id" ref="cust_notify_tree_view"/>
+            <field name="search_view_id" ref="building_loan_line_rs"/>
+            <field name="calendar_view_id" ref="loan_line_rs_own_calendar_view"/>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                </p>
+            </field>
+        </record>
+
+        <menuitem name="Notifications" id="menu_cust_notify_form_action" parent="itsys_real_estate.menu_itsys_real_estate" sequence="300" />
+        <menuitem action="cust_notify_form_action" id="menu_cust_notify_form_action1" parent="menu_cust_notify_form_action" />
+
+        <record id="cust_notify_rent_tree_view" model="ir.ui.view">
+            <field name="name">cust.notify.rent.tree</field>
+            <field name="model">loan.line.rs.rent</field>
+            <field name="arch" type="xml">
+                <tree string="Notifications (Rental Contracts)" create="false" edit="false">
+                    <field name="name"/>
+                    <field name="date"/>
+                    <field name="contract_partner_id"/>
+                    <field name="contract_building"/>
+                    <field name="contract_building_unit"/>
+                    <field name="loan_id"/>
+                    <field name="amount"/>
+                </tree>
+            </field>
+        </record>
+        <record id="cust_notify_rent_form_view" model="ir.ui.view">
+            <field name="name">cust.notify.rent.form</field>
+            <field name="model">loan.line.rs.rent</field>
+            <field name="arch" type="xml">
+                <form string="Notifications (Rental Contracts)" create="false" edit="false">
+                    <group>
+                        <field name="name"/>
+                        <field name="date"/>
+                        <field name="contract_partner_id"/>
+                        <field name="contract_building"/>
+                        <field name="contract_building_unit"/>
+                        <field name="loan_id"/>
+                        <field name="amount"/>
+                    </group>
+                </form>
+            </field>
+        </record>
+        <record id="building_loan_line_rs_rent" model="ir.ui.view">
+            <field name="name">loan.line.rs.rent.list.filter</field>
+            <field name="model">loan.line.rs.rent</field>
+            <field name="type">search</field>
+            <field name="arch" type="xml">
+                <search string="Top Search">
+                    <filter string="Today" name="due_today"
+                            domain="[('date', '=', context_today().strftime('%Y-%m-%d'))]"/>
+                    <filter string="Due in 7 days" name="due_week"
+                            domain="['&amp;', ('date', '&gt;=', context_today().strftime('%Y-%m-%d')),
+                                     ('date', '&lt;=', (context_today()+datetime.timedelta(days=7)).strftime('%Y-%m-%d'))
+                            ]"/>
+                    <separator/>
+                    <group expand="0" string="Group By...">
+                        <filter string="Date" domain="[]"  context="{'group_by':'date'}"/>
+                        <filter string="Partner" domain="[]"  context="{'group_by':'contract_partner_id'}"/>
+                        <filter string="Unit" domain="[]"  context="{'group_by':'contract_building_unit'}"/>
+                        <filter string="Building" domain="[]"  context="{'group_by':'contract_building_unit'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="loan_line_rs_rent_calendar_view">
+            <field name="name">Unpaid Installments</field>
+            <field name="model">loan.line.rs.rent</field>
+            <field name="priority" eval="2"/>
+            <field name="arch" type="xml">
+                <calendar string="Unpaid Installments" date_start="date" color="contract_partner_id">
+                    <field name="date"/>
+                </calendar>
+            </field>
+        </record>
+
+        <record id="cust_notify_rent_form_action" model="ir.actions.act_window">
+            <field name="name">Rental Contracts</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">loan.line.rs.rent</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">calendar,tree,form</field>
+            <field name="domain">[('paid', '=', False)]</field>
+            <field name="view_id" ref="cust_notify_rent_tree_view"/>
+            <field name="search_view_id" ref="building_loan_line_rs_rent"/>
+            <field name="calendar_view_id" ref="loan_line_rs_rent_calendar_view"/>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                </p>
+            </field>
+        </record>
+
+        <menuitem action="cust_notify_rent_form_action" id="menu_cust_notify_rent_form_action" parent="menu_cust_notify_form_action" />
+
+
+        <!--<record id="sms_tree_view" model="ir.ui.view">-->
+        <!--<field name="name">sms.tree</field>-->
+        <!--<field name="model">sms</field>-->
+        <!--<field name="arch" type="xml">-->
+        <!--<tree string="SMS">-->
+        <!--<field name="name"/>-->
+        <!--</tree>-->
+        <!--</field>-->
+        <!--</record>-->
+        <!--<record id="sms_form_view" model="ir.ui.view">-->
+        <!--<field name="name">sms.form</field>-->
+        <!--<field name="model">sms</field>-->
+        <!--<field name="arch" type="xml">-->
+        <!--<form string="SMS">-->
+        <!--<div>-->
+        <!--You can configure sms format for your customer dynamically.-->
+        <!--The Available variables are: partner, date, amount, contract, building, unit-->
+        <!--You must surround your variables with curly brackets, eg: {unit}-->
+        <!--</div>-->
+        <!--<group>-->
+        <!--<field name="name"/>-->
+        <!--</group>-->
+        <!--</form>-->
+        <!--</field>-->
+        <!--</record>-->
+        <!--<record id="sms_form_action" model="ir.actions.act_window">-->
+        <!--<field name="name">SMS</field>-->
+        <!--<field name="type">ir.actions.act_window</field>-->
+        <!--<field name="res_model">sms</field>-->
+        <!--<field name="view_type">form</field>-->
+        <!--<field name="view_id" ref="sms_tree_view"/>-->
+        <!--<field name="help" type="html">-->
+        <!--<p class="oe_view_nocontent_create">-->
+        <!--Click to add a new sms format-->
+        <!--</p>-->
+        <!--</field>-->
+        <!--</record>-->
+        <!-- Can be activated and linked to sms gateway-->
+        <!--<menuitem action="sms_form_action" id="menu_sms_form_action" parent="itsys_real_estate.menu_settings" sequence="50" />-->
+
+        <record id="action_send_multi_installments" model="ir.actions.server">
+            <field name="name">Send Reminder Mail</field>
+            <field name="model_id" ref="itsys_real_estate.model_loan_line_rs_own"/>
+            <field name="binding_model_id" ref="itsys_real_estate.model_loan_line_rs_own"/>
+            <field name="state">code</field>
+            <field name="code">
+                for record in records:
+                record.send_multiple_installments()
+            </field>
+        </record>
+
+    </data>
+</odoo>

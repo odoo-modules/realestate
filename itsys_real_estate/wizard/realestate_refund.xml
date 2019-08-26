@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <odoo>
+        <data>
+            <record id="customer_refund_form_view" model="ir.ui.view">
+                <field name="name">customer.payment.refund</field>
+                <field name="model">customer.payment.refund</field>
+                <field name="arch" type="xml">
+                    <form string="Report Options" version="7.0">
+                     <sheet>
+                     <group>
+                            <field name="payment_method" invisible="1"/>
+                            <field name="account" 
+                                   domain="[('user_type_id.type', '=', 'liquidity')]"
+                                   attrs="{'required':[('payment_method','=', 'cash')],'invisible':[('payment_method','=','cheque')]}"/>
+                            <field name="journal" invisible="1" domain = "[('type', '=', 'bank')]" attrs="{'required':[('payment_method','=', 'cheque')],'invisible':[('payment_method','=','cash')]}"/>
+                            <field name="partner" />
+                            <field name="contract"/>
+                            <field name="managerial_expenses"
+                                   attrs="{'readonly': [('managerial_expenses_percent','>', '0')]}" />
+                            <field name="managerial_expenses_percent"
+                                   attrs="{'readonly': [('managerial_expenses','>', '0')]}" />
+                       </group>                                
+                    <group>                      
+                    </group>
+                        <footer>
+                            <button name="refund" string="Refund" type="object" default_focus="1" class="oe_highlight"/>                                                       
+                            <button string="Cancel" class="oe_link" special="cancel"/>
+                        </footer>
+                     </sheet>
+                    </form>
+                </field>
+            </record>
+            <record id="action_customer_payment_refund" model="ir.actions.act_window">
+                <field name="name">Customer Refund</field>
+                <field name="type">ir.actions.act_window</field>
+                <field name="res_model">customer.payment.refund</field>
+                <field name="view_type">form</field>
+                <field name="view_mode">form</field>
+                <field name="target">new</field>
+            </record>
+        </data>
+    </odoo>
+

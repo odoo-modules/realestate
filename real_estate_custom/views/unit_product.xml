@@ -1,0 +1,22 @@
+<odoo>
+    <data>
+
+
+        <record model="ir.ui.view" id="building_unit_form_prp_deif_filter">
+            <field name="name">property_form_filter_deif</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_search_view"/>
+
+            <field name="arch" type="xml">
+                <xpath expr="//filter[@name='consumable']" position="replace">
+                    <filter string="Products" name="consumable" domain="[('type', 'in', ['consu', 'product']),('is_property','!=',True)]"/>
+
+                </xpath>
+
+            </field>
+        </record>
+
+
+
+    </data>
+</odoo>

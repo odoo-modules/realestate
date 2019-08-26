@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="installment_rescheduling_view_form" model="ir.ui.view">
+            <field name="name">installment.rescheduling.form</field>
+            <field name="model">installment.rescheduling</field>
+            <field name="arch" type="xml">
+                <form string="">
+                    <sheet>
+                        <group>
+                            <field name="partner_id"/>
+                            <field name="contract_id" options="{'no_create':True,'no_edit':True,'no_open':True}"/>
+                            <field name="total_amount"/>
+                            <field name="reschedule_all"/>
+                            <field name="template_id"
+                                   attrs="{'invisible':[('reschedule_all','=',False)],'required':[('reschedule_all','=',True)]}"/>
+                            <field name="start_date"
+                                   attrs="{'invisible':[('reschedule_all','=',False)],'required':[('reschedule_all','=',True)]}"/>
+                        </group>
+                        <notebook>
+                            <page string="Unpaid Installments">
+                                <field name="installment_ids" attrs="{'invisible':[('reschedule_all','=',True)]}">
+                                    <tree editable="bottom">
+                                        <field name="name"/>
+                                        <field name="date"/>
+                                        <field name="amount"/>
+                                        <field name="delete_ok"/>
+                                        <field name="inst_id" invisible="1"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <footer>
+                        <button string="Reschedule" name="action_reschedule" class="btn-primary" type="object"
+                                icon="fa-calendar"/>
+                        <button string="Cancel" class="btn-default" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+
+        <!--TODO the most powerfull window action-->
+        <record id="installment_rescheduling_window_action" model="ir.actions.act_window">
+            <field name="name">Installment Rescheduling</field>
+            <field name="res_model">installment.rescheduling</field>
+            <field name="view_mode">form</field>
+            <field name="view_type">form</field>
+            <field name="target">new</field>
+        </record>
+
+        <!-- This Menu Item Must have a parent -->
+        <menuitem id="rescheduling_categ" name="Rescheduling" parent="itsys_real_estate.menu_itsys_real_estate"
+                  sequence="91"/>
+        <!-- This Menu Item must have a parent and an action -->
+        <menuitem id="inst_rescheduling_menu" name="Inst Rescheduling" parent="rescheduling_categ"
+                  action="installment_rescheduling_window_action" sequence="1"/>
+
+    </data>
+</odoo>

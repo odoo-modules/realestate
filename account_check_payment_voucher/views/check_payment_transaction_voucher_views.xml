@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Check Payment transactions -->
+
+        <record id="check_payment_transaction_voucher_list" model="ir.ui.view">
+            <field name="name">check.payment.transaction.voucher.list</field>
+            <field name="model">check.payment.transaction.voucher</field>
+            <field name="arch" type="xml">
+                <tree string="Check Payments">
+                    <field name="check_name"/>
+                    <field name="check_number"/>
+                    <field name="check_payment_date"/>
+                    <field name="amount"/>
+                    <field name="check_issue_date"/>
+                    <field name="bank_id" options="{'no_open': True, 'no_create': True}" />
+
+                    <field name="partner_id" invisible="1"/>
+                    <field name="currency_id" options="{'no_open': True, 'no_create': True}" groups="base.group_multi_currency"/>
+                    <field name="company_id" groups="base.group_multi_company"/>
+                    <field name="journal_id" invisible="1"/>
+
+                    <field name="state" invisible="1"/>
+                    <field name="payment_type" invisible="1"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="check_payment_transaction_voucher_customer_list" model="ir.ui.view">
+            <field name="name">check.payment.transaction.voucher.customer.tree</field>
+            <field name="model">check.payment.transaction.voucher</field>
+            <field name="arch" type="xml">
+                <tree decoration-info="state == 'draft'" decoration-muted="state in ['returned', 'cancelled']" edit="false">
+                    <field name="check_name"/>
+                    <field name="check_number"/>
+                    <field name="check_payment_date"/>
+                    <field name="amount" sum="Amount"/>
+                    <field name="check_issue_date"/>
+                    <field name="bank_id" options="{'no_open': True, 'no_create': True}" />
+                    <field name="partner_id" string="Customer"/>
+                    <field name="currency_id" options="{'no_open': True, 'no_create': True}" groups="base.group_multi_currency"/>
+                    <field name="company_id" groups="base.group_multi_company"/>
+                    <field name="state"/>
+                    <field name="journal_id" invisible="1"/>
+                    <field name="payment_type" invisible="1"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="check_payment_transaction_voucher_vendor_list" model="ir.ui.view">
+            <field name="name">check.payment.transaction.voucher.vendor.tree</field>
+            <field name="model">check.payment.transaction.voucher</field>
+            <field name="arch" type="xml">
+                <tree decoration-info="state == 'draft'" decoration-muted="state in ['returned', 'cancelled']" edit="false">
+                    <field name="check_name"/>
+                    <field name="check_number"/>
+                    <field name="check_payment_date"/>
+                    <field name="amount" sum="Amount"/>
+                    <field name="check_issue_date"/>
+                    <field name="bank_id" options="{'no_open': True, 'no_create': True}" />
+                    <field name="partner_id" string="Vendor"/>
+                    <field name="currency_id" options="{'no_open': True, 'no_create': True}" groups="base.group_multi_currency"/>
+                    <field name="company_id" groups="base.group_multi_company"/>
+                    <field name="state"/>
+                    <field name="journal_id" invisible="1"/>
+                    <field name="payment_type" invisible="1"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="check_payment_transaction_voucher_form" model="ir.ui.view">
+            <field name="name">check.payment.transaction.voucher.form</field>
+            <field name="model">check.payment.transaction.voucher</field>
+            <field name="arch" type="xml">
+                <form string="Check Payment">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="check_name"/>
+                                <field name="check_number"/>
+                                <field name="check_payment_date"/>
+                                <label for="amount"/>
+                                <div class="o_row">
+                                    <field name="amount"/>
+                                    <field name="currency_id" options="{'no_open': True, 'no_create': True}"  groups="base.group_multi_currency"/>
+                                </div>
+
+                            </group>
+                            <group>
+                                <field name="check_issue_date"/>
+                                <field name="bank_id" options="{'no_open': True, 'no_create': True}" />
+                                <field name="journal_id" invisible="1"/>
+
+                                <field name="partner_id" invisible="1" />
+                                <field name="company_id" groups="base.group_multi_company"/>
+
+                                <field name="state" invisible="1"/>
+                                <field name="payment_type" invisible="1"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="check_payment_transaction_voucher_form_statusbar_customer" model="ir.ui.view">
+            <field name="name">check.payment.transaction.voucher.form.customer</field>
+            <field name="model">check.payment.transaction.voucher</field>
+            <field name="arch" type="xml">
+                <form string="Check Payment">
+                    <header>
+
+                        <button type="object" name="action_receive" states="draft" string="Validate" class="oe_highlight"/>
+                        <button type="object" name="action_deposit" states="received" string="Deposited to Bank" class="oe_highlight"/>
+                        <button type="object" name="action_fund_credited" states="deposited" string="Done" class="oe_highlight"/>
+                        <button type="object" name="action_return_received_check" states="received,deposited" string="Returned Checks"/>
+                        <button type="object" name="action_cancel" states="draft" string="Cancel"/>
+
+                        <field name="state" widget="statusbar" statusbar_visible="draft,received,deposited,returned,posted,cancelled"/>
+                    </header>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="check_name"/>
+                                <field name="check_number"/>
+                                <field name="check_payment_date"/>
+                                <label for="amount"/>
+                                <div class="o_row">
+                                    <field name="amount"/>
+                                    <field name="currency_id" options="{'no_open': True, 'no_create': True}" groups="base.group_multi_currency"/>
+                                </div>
+                                <field name="account_voucher_id" domain="[('voucher_type','=','sale')]"  />
+
+                            </group>
+                            <group>
+                                <field name="check_issue_date"/>
+                                <field name="bank_id" options="{'no_open': True, 'no_create': True}" />
+                                <field name="journal_id" widget="selection" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+
+                                <label for="partner_id"/>
+                                <div>
+                                    <field name="partner_id" context="{'show_address': 1}" options="{'always_reload': True}"/>
+                                </div>
+                                <field name="company_id" groups="base.group_multi_company"/>
+                                <field name="payment_type" invisible="1"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="check_payment_transaction_voucher_form_statusbar_vendor" model="ir.ui.view">
+            <field name="name">check.payment.transaction.voucher.form.vendor</field>
+            <field name="model">check.payment.transaction.voucher</field>
+            <field name="arch" type="xml">
+                <form string="Check Payment">
+                    <header>
+                        <button type="object" name="action_issue" states="draft" string="Validate" class="oe_highlight"/>
+                        <button type="object" name="action_fund_debited" states="issued" string="Done" class="oe_highlight"/>
+                        <button type="object" name="action_return_issued_check" states="issued" string="Returned Check"/>
+                        <button type="object" name="action_cancel" states="draft" string="Cancel"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,issued,returned,posted,cancelled"/>
+                    </header>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="check_name"/>
+                                <field name="check_number"/>
+                                <field name="check_payment_date"/>
+                                <label for="amount"/>
+                                <div class="o_row">
+                                    <field name="amount"/>
+                                    <field name="currency_id" options="{'no_open': True, 'no_create': True}" groups="base.group_multi_currency"/>
+                                </div>
+                                <field name="account_voucher_id" domain="[('voucher_type','=','purchase')]"  />
+
+                            </group>
+                            <group>
+                                <field name="check_issue_date"/>
+                                <field name="bank_id" options="{'no_open': True, 'no_create': True}" />
+                                <field name="journal_id" widget="selection" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+
+                                <label for="partner_id"/>
+                                <div>
+                                    <field name="partner_id" context="{'show_address': 1}" options="{'always_reload': True}"/>
+                                </div>
+                                <field name="company_id" groups="base.group_multi_company"/>
+                                <field name="payment_type" invisible="1"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+
+        <record id="check_payment_transaction_voucher_kanban" model="ir.ui.view">
+            <field name="name">check.payment.transaction.voucher.kanban</field>
+            <field name="model">check.payment.transaction.voucher</field>
+            <field name="arch" type="xml">
+                <kanban class="o_kanban_mobile">
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div t-attf-class="oe_kanban_content oe_kanban_global_click">
+                                <div class="row">
+                                    <div class="col-xs-6">
+                                        <strong><field name="check_name"/></strong>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <span><field name="check_number"/></span>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-6">
+                                        <span><field name="check_payment_date"/></span>
+                                    </div>
+                                    <div class="col-xs-6">
+                                        <span class="pull-right">
+                                            <field name="amount" widget="monetary"/>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+        <record id="check_payment_transaction_voucher_search" model="ir.ui.view">
+            <field name="name">check.payment.transaction.voucher.search</field>
+            <field name="model">check.payment.transaction.voucher</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="partner_id"/>
+                    <field name="check_name"/>
+                    <field name="check_number"/>
+                    <field name="check_issue_date"/>
+                    <field name="check_payment_date"/>
+                </search>
+            </field>
+        </record>
+
+        <record id="check_payment_transaction_voucher_graph" model="ir.ui.view">
+            <field name="name">check.payment.transaction.voucher.graph</field>
+            <field name="model">check.payment.transaction.voucher</field>
+            <field name="arch" type="xml">
+                <graph string="Payments" type="bar" stacked="1">
+                    <field name="partner_id"/>
+                    <field name="journal_id"/>
+                    <field name="amount" type="measure"/>
+                </graph>
+            </field>
+        </record>
+
+
+    </data>
+</odoo>

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="cust_notify_form_view" model="ir.ui.view">
+            <field name="name">loan.line.rs.own.form.inherit</field>
+            <field name="model">loan.line.rs.own</field>
+            <field name="inherit_id" ref="itsys_real_estate.cust_notify_form_view"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//field[@name='contract_partner_id']" position="after">
+                    <field name="phone"/>
+                    <field name="paid"/>
+                </xpath>
+                <xpath expr="//field[@name='amount']" position="after">
+                    <field name="due_amount"/>
+                </xpath>
+
+            </field>
+        </record>
+
+
+        <record id="cust_notify_tree_view" model="ir.ui.view">
+            <field name="name">loan.line.rs.own.tree.inherit</field>
+            <field name="model">loan.line.rs.own</field>
+            <field name="inherit_id" ref="itsys_real_estate.cust_notify_tree_view"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//field[@name='contract_partner_id']" position="after">
+                    <field name="phone"/>
+                </xpath>
+
+                <xpath expr="//field[@name='amount']" position="after">
+                    <field name="due_amount"/>
+                    <field name="paid"/>
+                </xpath>
+
+            </field>
+        </record>
+
+    </data>
+</odoo>

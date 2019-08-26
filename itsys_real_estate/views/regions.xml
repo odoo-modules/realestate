@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>         
+        <!-- regions -->
+        <record id="regions_tree_view" model="ir.ui.view">
+            <field name="name">regions.tree</field>
+            <field name="model">regions</field>
+            <field name="arch" type="xml">
+                <tree string="regions">
+                    <field name="complete_name"/>
+                    <field name="city_id"/>  
+                    <field name="country_id"/>
+                </tree>
+            </field>
+        </record>
+        <record id="regions_form_view" model="ir.ui.view">
+            <field name="name">regions.form</field>
+            <field name="model">regions</field>
+            <field name="arch" type="xml">
+                <form string="regions">
+                <sheet>                
+                    <group>
+                        <field name="name"/>  
+                        <field name="city_id"/>  
+                        <field name="country_id"/>  
+                        <field name="region_id"/>                                                                       
+                    </group>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+                </form>
+            </field>
+        </record>
+        <record id="view_regions_search" model="ir.ui.view">
+            <field name="name">regions.search</field>
+            <field name="model">regions</field>
+            <field name="arch" type="xml">
+                <search string="Regions">
+                    <group expand="1" string="Group By">
+                        <filter string="Country" icon="terp-stock_effects-object-colorize" domain="[]" context="{'group_by':'country_id'}"/>
+                        <filter string="City" icon="terp-stock_effects-object-colorize" domain="[]" context="{'group_by':'city_id'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record id="regions_form_action" model="ir.actions.act_window">
+            <field name="name">Regions</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">regions</field>
+            <field name="view_type">form</field>
+            <field name="view_id" ref="regions_tree_view"/>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click to add a new region
+              </p>
+            </field>
+            <field name="search_view_id" ref="view_regions_search"/>
+        </record>
+        <menuitem action="regions_form_action" id="menu_regions_form_action" parent="itsys_real_estate.menu_building_list" sequence="2" />
+    </data>
+</odoo>

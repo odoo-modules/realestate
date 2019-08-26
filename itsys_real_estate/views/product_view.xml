@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+        <record id="biztech_form_view_for_biz_product_images" model="ir.ui.view">
+            <field name="name">biztech.product.images</field>
+            <field name="model">biztech.product.images</field>
+            <field name="arch" type="xml">
+                <form string="Multiple Image">
+                    <group>
+                        <field name="name"/>
+                        <field name="alt"/>
+                        <field name="attach_type" widget='radio'/>
+                        <field name="image" 
+                                widget="image" class="oe_avatar"
+                               height='64' width="64" options='{"preview_image":"image_medium"}'
+                               attrs="{'invisible': [('attach_type', '=', 'video')]}"/>
+                        <field name="video_type" attrs="{'invisible': [('attach_type', '=', 'image')]}"/>
+                    </group>
+                    <group col="4">
+                        <field name="cover_image" 
+                            widget="image" class="oe_avatar"
+                            height="64" width="64" options='{"preview_image":"image_medium"}'
+                            attrs="{'invisible': ['|', ('attach_type', '=', 'image'), ('video_type', '=', 'youtube')]}"/>
+                        <label string="It is required"
+                            attrs="{'invisible': ['|', ('attach_type', '=', 'image'), ('video_type', '=', 'youtube')]}"/>
+                    </group>
+                    <group>
+                        <field name="video_id"
+                            attrs="{'invisible': ['|', ('attach_type', '=', 'image'), ('video_type', '=', 'html5video')]}"/>
+
+                        <field name="video_ogv"
+                            attrs="{'invisible': ['|', ('attach_type', '=', 'image'), ('video_type', 'in', ('youtube', 'vimeo'))]}"/>
+                        <field name="video_webm"
+                            attrs="{'invisible': ['|', ('attach_type', '=', 'image'), ('video_type', 'in', ('youtube', 'vimeo'))]}"/>
+                        <field name="video_mp4"
+                            attrs="{'invisible': ['|', ('attach_type', '=', 'image'), ('video_type', 'in', ('youtube', 'vimeo'))]}"/>
+
+                        <field name="sequence"/>
+                        <field name="more_view_exclude"/>
+                    </group>
+                </form>
+            </field>
+        </record>
+       
+        <record id="biztech_list_view_for_biz_product_images" model="ir.ui.view">
+            <field name="name">biztech.product.images</field>
+            <field name="model">biztech.product.images</field>
+            <field name="arch" type="xml">
+                <tree name="Multiple Image">
+                    <field name="name"/>
+                    <field name="alt"/>
+                    <field name="attach_type"/>
+                    <field name="image" widget='image' height='64px' width="64"
+                        attrs="{'invisible': [('attach_type', '=', 'video')]}" options='{"preview_image":"image_medium"}'/>
+
+                    <field name="video_type" attrs="{'invisible': [('attach_type', '=', 'image')]}"/>
+                    <field name="video_id" attrs="{'invisible': [('attach_type', '=', 'image')]}"/>
+                    <field name="sequence"/>
+                    <field name="more_view_exclude"/>
+                </tree>
+            </field>
+        </record>
+
+</odoo>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Can be activated and linked to sms gateway-->
+        <!--        <act_window id="partner_wizard_action"
+            name="Send SMS"
+            src_model="loan.line.rs.own"
+            res_model="sms.wizard"
+            view_type="form" view_mode="form"
+            key2="client_action_multi" target="new"/>
+
+         wizard view 
+        <record id="wizard_view1" model="ir.ui.view">
+            <field name="name">Send SMS</field>
+            <field name="model">sms.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Send SMS">
+                    <p>Do you want to send SMS to these customers?</p>                    
+                    <footer>
+                        <button string="Confirm" name="action_apply" type="object" class="oe_highlight"/>
+                        or
+                        <button string="Cancel" class="oe_link" special="cancel" />    
+                    </footer>
+                </form>
+            </field>
+        </record>-->
+
+    </data>
+</odoo>

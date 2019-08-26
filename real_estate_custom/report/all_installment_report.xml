@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- QWeb Reports -->
+        <report
+                id="all_inst_report"
+                model="all.installment.report"
+                report_type="qweb-pdf"
+                string="All Inst"
+                name="real_estate_custom.all_inst_report_template"
+                file="real_estate_custom.all_inst_report_template"
+        />
+
+        <template id="all_inst_report_template">
+            <t t-call="web.html_container">
+                <t t-call="web.internal_layout">
+                    <div class="page">
+                        <style type="text/css">
+                            table.gridtable td, th {
+                            border: 1px solid #ddd;
+                            text-align: left;
+                            }
+
+                            table.gridtable {
+                            border-collapse: collapse;
+                            width: 100%;
+                            }
+
+                            table.gridtable th, td {
+                            padding: 5px;
+                            }
+                            table.report_table {
+                            font-size: 14px !important;
+                            border-collapse: collapse !important;
+                            width: 100% !important;
+                            }
+
+                            table.report_table th, table.report_table td {
+                            padding: 8px !important;
+                            text-align: center !important;
+                            }
+
+                            table.report_table tr:nth-child(even){background-color: #f2f2f2 !important;}
+
+                            table.report_table th {
+                            background-color: #000080 !important;
+                            color: white !important;
+                            }
+
+                        </style>
+                        <h2>Installments Report</h2>
+                        <table class="gridtable" t-if=" docs.date_from or docs.date_to">
+                            <tr>
+                                <th align="center">Date From:</th>
+                                <th align="center">Date To:</th>
+                            </tr>
+                            <tr>
+                                <td align="center">
+                                    <span t-esc="docs.date_from"/>
+                                </td>
+                                <td align="center">
+                                    <span t-esc="docs.date_to"/>
+                                </td>
+                            </tr>
+                        </table>
+                        <br/>
+                        <table class="report_table">
+                            <tr>
+
+                                <th>Customer</th>
+                                <th>Phone</th>
+                                <th>Contract Ref</th>
+                                <th>Building</th>
+                                <th>Unit</th>
+                                <th>Due Date</th>
+                                <th>Installment</th>
+                                <th>Input Amount</th>
+                                <th>Due Amount</th>
+                                <th>Accounting Date</th>
+                                <th>Voucher Number</th>
+                            </tr>
+                            <t t-foreach="all_inst" t-as="inst">
+                                <tr>
+
+                                    <td>
+                                        <span t-field="inst.contract_partner_id"/>
+                                    </td>
+                                    <td>
+                                        <span t-esc="inst.phone"/>
+                                    </td>
+                                    <td>
+                                        <span t-field="inst.loan_id"/>
+                                    </td>
+                                    <td>
+                                        <span t-field="inst.contract_building"/>
+                                    </td>
+                                     <td>
+                                        <span t-field="inst.contract_building_unit"/>
+                                    </td>
+                                    <td>
+                                        <span t-esc="inst.date"/>
+                                    </td>
+                                    <td>
+                                        <span t-esc="inst.amount"/>
+                                    </td>
+                                    <td>
+                                        <span t-esc="inst.due_amount"/>
+                                    </td>
+                                    <td>
+                                        <span t-esc="inst.amount - inst.due_amount"/>
+                                    </td>
+
+                                    <td>
+                                        <span t-field="inst.acc_date"/>
+                                    </td>
+
+                                      <td>
+                                        <span t-field="inst.voucher_num"/>
+                                    </td>
+
+
+                                </tr>
+                            </t>
+
+                            <tr>
+                                <th colspan="6" style="text-align:right">Total of Installment</th>
+                                <th colspan="4">
+                                    <t t-esc="sum(line.amount for line in all_inst)"/>
+                                </th>
+                             </tr>
+
+                             <tr>
+                                <th colspan="6" style="text-align:right">Total of Input Amount</th>
+                                <th colspan="4">
+                                    <t t-esc="sum((line.amount - line.due_amount) for line in all_inst)"/>
+                                </th>
+                             </tr>
+
+                               <tr>
+                                <th colspan="6" style="text-align:right">Total of Due Amount</th>
+                                <th colspan="4">
+                                    <t t-esc="sum(line.due_amount for line in all_inst)"/>
+                                </th>
+                             </tr>
+
+                        </table>
+                    </div>
+                </t>
+            </t>
+        </template>
+
+    </data>
+</odoo>

@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<template id="report_quittance_letter_document">
+			<t t-call="web.external_layout">
+				<div class="page">
+					<style type="text/css">
+						table.gridtable td, th {
+						border: 1px solid #ddd;
+						text-align: left;
+						}
+
+						table.gridtable {
+						border-collapse: collapse;
+						width: 100%;
+						}
+
+						table.gridtable th, td {
+						padding: 5px;
+						}
+						table.report_table {
+						font-size: 16px !important;
+						border-collapse: collapse !important;
+						width: 100% !important;
+						}
+
+						table.report_table th, table.report_table td {
+						padding: 8px !important;
+						text-align: center !important;
+						}
+
+						table.report_table tr:nth-child(even){background-color: #f2f2f2 !important;}
+
+						table.report_table th {
+						background-color: #000080 !important;
+						color: white !important;
+						}
+
+					</style>
+					<table class="report_table">
+						<tr>
+							<th align="center">
+								Quittance Letter # <span style="color: white !important" t-field="o.name"/>
+							</th>
+						</tr>
+					</table>
+					<br/>
+					<table class="gridtable">
+						<tr>
+							<th align="center">Building:</th>
+							<th align="center">Unit:</th>
+							<th align="center">Date:</th>
+						</tr>
+						<tr>
+							<td align="center"><span t-field="o.building.code"/></td>
+							<td align="center"><span t-field="o.building_unit.code"/></td>
+							<td align="center"><span t-field="o.date"/></td>
+						</tr>
+					</table>
+					<br/>
+
+					<p style="text-decoration: underline;font-size: 16px;">I, the undersigned, states that I have received the property, described by the following: </p>
+
+					<p style="text-decoration: underline;font-size: 16px;">Unit Specifications: </p>
+					<table class="gridtable" align="right">
+						<tr>
+							<th width="25%">Unit:</th>
+							<td width="25%"><span t-field="o.building_unit.name"/></td>
+							<th width="25%">Code:</th>
+							<td width="25%"><span t-field="o.building_unit.code"/></td>
+						</tr>
+						<tr>
+							<th>Status:</th>
+							<td><span t-field="o.building_unit.status"/></td>
+							<th>Type:</th>
+							<td><span t-field="o.building_unit.type"/></td>
+						</tr>
+						<tr>
+							<th>Floor:</th>
+							<td><span t-field="o.building_unit.floor"/></td>
+							<th>Area:</th>
+							<td><span t-field="o.building_unit.building_area"/></td>
+						</tr>
+						<tr>
+							<th>Electricity Meter:</th>
+							<td><span t-field="o.building_unit.electricity_meter"/></td>
+							<th>Water Meter:</th>
+							<td><span t-field="o.building_unit.water_meter"/></td>
+						</tr>
+						<tr>
+							<th>Northen border:</th>
+							<td><span t-field="o.building_unit.north"/></td>
+							<th>Southern border:</th>
+							<td><span t-field="o.building_unit.south"/></td>
+						</tr>
+						<tr>
+							<th>Eastern border :</th>
+							<td><span t-field="o.building_unit.east"/></td>
+							<th>Western border:</th>
+							<td><span t-field="o.building_unit.west"/></td>
+						</tr>
+					</table>
+					<br/>
+					<table >
+						<tr>
+							<th>Executed in duplicate, one copy per each party for necessary action
+							</th>
+						</tr>
+					</table>
+				</div>
+			</t>
+		</template>
+
+		<template id="report_quittance_letter">
+			<t t-call="web.html_container">
+				<t t-foreach="docs" t-as="o">
+					<t t-call="itsys_real_estate.report_quittance_letter_document" t-lang="o.partner_id.lang"/>
+				</t>
+			</t>
+		</template>
+	</data>
+</odoo>

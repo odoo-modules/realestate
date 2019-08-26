@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record model="ir.module.category" id="module_real_estate_category">
+                <field name="name">Real Estate</field>
+                <field name="sequence">0</field>
+                <field name="visible" eval="0" />
+        </record>
+
+        <record id="group_reservation" model="res.groups">
+            <field name="name">Manage Reservations</field>
+            <field name="category_id" ref="module_real_estate_category"/>
+        </record>
+
+        <record id="group_ownership_rental_contracts" model="res.groups">
+            <field name="name">Manage Ownership/Rental Contracts</field>
+            <field name="category_id" ref="module_real_estate_category"/>
+        </record>
+
+        <record id="group_units_structure" model="res.groups">
+            <field name="name">Manage Property Structre</field>
+            <field name="category_id" ref="module_real_estate_category"/>
+        </record>       
+        
+        <record id="group_payments" model="res.groups">
+            <field name="name">Manage Payments</field>
+            <field name="category_id" ref="module_real_estate_category"/>
+            <field name="users" eval="[(4, ref('base.user_root'))]"/>            
+        </record>
+
+        <record id="group_notification_control" model="res.groups">
+            <field name="name">Send notifications to clients</field>
+            <field name="category_id" ref="module_real_estate_category"/>
+        </record>
+        
+        <record id="group_real_estate_reports" model="res.groups">
+            <field name="name">Real Estate Reports</field>
+            <field name="category_id" ref="module_real_estate_category"/>
+            <field name="users" eval="[(4, ref('base.user_root'))]"/>            
+        </record>   
+             
+        <record id="group_real_estate_admin" model="res.groups">
+            <field name="name">Real Estate Admin</field>
+            <field name="category_id" ref="module_real_estate_category"/>
+            <field name="users" eval="[(4, ref('base.user_root'))]"/>
+        </record>
+    </data>
+</odoo>

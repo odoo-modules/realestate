@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="res_config_settings_view_form" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.inherit.hr</field>
+        <field name="model">res.config.settings</field>
+        <field name="priority" eval="70"/>
+        <field name="inherit_id" ref="base.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[hasclass('settings')]" position="inside">
+                <div class="app_settings_block" data-string="Real Estate" string="Real Estate" data-key="itsys_real_estate" >
+                    <h2>Reservations</h2>
+                    <div class="row mt16 o_settings_container" title="Prout prout prout">
+                        <div class="col-xs-12 col-md-6 o_setting_box">
+                            <div class="o_setting_right_pane">
+                                <label for="default_reservation_hours"/>
+                                <div class="row">
+                                    <div class="text-muted col-md-8">
+                                        Set here number of hours to release units reservation
+                                    </div>
+                                </div>
+                                <div class="content-group">
+                                    <div class="mt16">
+                                        <field name="default_reservation_hours"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <h2>Contracts</h2>
+                            <div class="row mt16 o_settings_container">
+                                <div class="col-xs-12 col-md-6 o_setting_box">
+                                    <div class="o_setting_right_pane">
+                                        <label string="Contracts Income Account"/>
+                                        <div class="text-muted">
+                                            Set default income account for properties
+                                        </div>
+                                        <div class="content-group">
+                                            <div class="mt16 row">
+                                                <label for="default_income_account" string="Income Account" class="col-xs-3 col-md-3 o_light_label"/>
+                                                <field name="default_income_account" class="oe_inline"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-md-6 o_setting_box" id="fiscalyear">
+                                    <div class="o_setting_left_pane"/>
+                                    <div class="o_setting_right_pane">
+                                        <label string="Analytic"/>
+                                        <div class="text-muted">
+                                            Analytic Account used in contracts
+                                        </div>
+                                         <div class="content-group">
+                                            <div class="row mt16">
+                                                <label for="default_analytic_account" class="col-md-5 o_light_label"/>
+                                                <field name="default_analytic_account"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                    <h2>Discounts &amp; Penalties</h2>
+                            <div class="row mt16 o_settings_container">
+                                <div class="col-xs-12 col-md-6 o_setting_box" id="fiscalyear">
+                                    <div class="o_setting_left_pane"/>
+                                    <div class="o_setting_right_pane">
+                                        <label string="Discounts"/>
+                                        <div class="text-muted">
+                                            Set default discount account for properties
+                                        </div>
+                                         <div class="content-group">
+                                            <div class="row mt16">
+                                                <label for="default_discount_account" class="col-md-5 o_light_label"/>
+                                                <field name="default_discount_account"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-md-6 o_setting_box" id="fiscalyear">
+                                    <div class="o_setting_left_pane"/>
+                                    <div class="o_setting_right_pane">
+                                        <label string="Penalties"/>
+                                        <div class="text-muted">
+                                            Set default penalty account for properties
+                                        </div>
+                                         <div class="content-group">
+                                            <div class="row mt16">
+                                                <label for="default_penalty_account" class="col-md-5 o_light_label"/>
+                                                <field name="default_penalty_account"/>
+                                            </div>
+                                            <div class="row mt16">
+                                                <label for="default_penalty_percent" class="col-md-5 o_light_label"/>
+                                                <field name="default_penalty_percent"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                </div>
+                    <h2>Property Refunds</h2>
+                    <div class="row mt16 o_settings_container" title="Prout prout prout">
+                        <div class="col-xs-12 col-md-6 o_setting_box">
+                            <div class="o_setting_right_pane">
+                                <label for="default_me_account"/>
+                                <div class="row">
+                                    <div class="text-muted col-md-8">
+                                        Set here managerial expenses account used in properties refund
+                                    </div>
+                                </div>
+                                <div class="content-group">
+                                    <div class="mt16">
+                                        <field name="default_me_account"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </xpath>
+        </field>
+    </record>
+
+
+    <record id="action_real_estate_config" model="ir.actions.act_window">
+        <field name="name">Settings</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">res.config.settings</field>
+        <field name="view_mode">form</field>
+        <field name="target">inline</field>
+        <field name="context">{'module' : 'itsys_real_estate'}</field>
+    </record>
+
+    <menuitem id="menu_real_estate_config" name="Settings" parent="itsys_real_estate.menu_settings"
+        sequence="1000" action="action_real_estate_config"/>
+
+</odoo>

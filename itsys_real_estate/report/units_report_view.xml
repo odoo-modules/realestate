@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_report_units_graph" model="ir.ui.view">
+            <field name="name">units.report.graph</field>
+            <field name="model">units.report</field>
+            <field name="arch" type="xml">
+                <graph string="units Analysis" type="pivot">
+
+                    <field name="nbr" type="measure"/>
+
+                </graph>
+            </field>
+        </record>
+        <record id="view_report_units_search" model="ir.ui.view">
+            <field name="name">units.report.search</field>
+            <field name="model">units.report</field>
+            <field name="arch" type="xml">
+                <search string="units Analysis">
+                    <group expand="1" string="Group By">
+                        <filter string="Building" context="{'group_by':'building_id'}"/>
+                        <filter string="Owner" name="Owner" context="{'group_by':'partner_id'}"/>
+                        <filter string="Specification" name="Specification" context="{'group_by':'desc'}"/>
+                        <filter string="City" name="Knowledge" context="{'group_by':'city'}"/>
+                        <filter string="Rooms" context="{'group_by':'rooms'}"/>
+                        <filter string="Type" context="{'group_by':'type'}"/>
+                        <filter string="State" context="{'group_by':'state'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+        <record id="action_report_units_all" model="ir.actions.act_window">
+            <field name="name">units Analysis</field>
+            <field name="res_model">units.report</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">graph</field>
+            <field name="search_view_id" ref="view_report_units_search"/>
+            <field name="context">{'group_by_no_leaf':1,'group_by':[]}</field>
+        </record>
+        <menuitem id="menu_report_units" sequence="3" parent="base.menu_reporting" name="Real Estate"/>
+        <menuitem action="action_report_units_all" id="menu_report_units_all" parent="menu_report_units"  name="Units Analysis" sequence="3"/>
+
+
+
+    </data>
+</odoo>
+
+
+
+
+
+
+
+
+

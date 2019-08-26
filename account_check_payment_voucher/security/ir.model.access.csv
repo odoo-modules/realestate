@@ -1,0 +1,6 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+check_payment_transaction_voucher_all,check.payment.transaction.voucher_all,model_check_payment_transaction_voucher,,1,0,0,0
+check_payment_transaction_voucher_user,check.payment.transaction.voucher_user,model_check_payment_transaction_voucher,base.group_user,1,0,0,0
+check_payment_transaction_voucher_system,check.payment.transaction.voucher_system,model_check_payment_transaction_voucher,base.group_system,1,1,1,1
+check_payment_transaction_voucher_billing,check.payment.transaction.voucher_billing,model_check_payment_transaction_voucher,account.group_account_invoice,1,1,1,1
+check_payment_transaction_voucher_accountant,check.payment.transaction.voucher_accountant,model_check_payment_transaction_voucher,account.group_account_user,1,1,1,1

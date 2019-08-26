@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="unit_reservation_form_view" model="ir.ui.view">
+            <field name="name">unit.reservation.form</field>
+            <field name="model">unit.reservation</field>
+            <field name="inherit_id" ref="itsys_real_estate.unit_reservation_form_view"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//field[@name='account_income']" position="after">
+                    <field name="journal_id" attrs="{'readonly':[('state','!=','draft')]}"
+                           domain="[('type','in',['sale','cash','bank'])]" required="1"/>
+                    <field name="expired_date" attrs="{'readonly':[('state','!=','draft')]}"/>
+                    <field name="reservation_voucher_id" readonly="1"
+                           context="{'form_view_ref':'account_voucher.view_sale_receipt_form'}"/>
+                    <field name="refund_voucher_id" readonly="1"/>
+                    <field name="is_refunded" readonly="1"/>
+                </xpath>
+
+                <xpath expr="//button[@name='action_cancel']" position="after">
+                    <button name="action_refund" string="Refund Reservation Amount" type="object"
+                            attrs="{'invisible':['|',('state','!=','confirmed'),'|',('reservation_voucher_id','=',False),('is_refunded','=',True)]}"
+                            context="{'default_refund_amount':reservation_amount}"/>
+                </xpath>
+
+                <xpath expr="//field[@name='building_unit']" position="replace">
+                    <field name="building_unit" attrs="{'readonly': [('state','!=','draft')]}"
+                           context="{'form_view_ref':'itsys_real_estate.building_unit_form'}"/>
+                </xpath>
+
+                <xpath expr="//field[@name='building_area']" position="after">
+                    <field name="price_per_meter"/>
+                </xpath>
+
+                <xpath expr="//field[@name='pricing']" position="after">
+                    <field name="currency_id" invisible="1"/>
+                    <field name="reservation_amount" attrs="{'readonly':[('state','!=','draft')]}"/>
+                </xpath>
+
+                <xpath expr="//field[@name='loan_line']" position="replace">
+                    <field name="loan_line">
+                        <tree string="Installments" editable="bottom">
+                            <field name="serial" widget="handle" required="1"/>
+                            <field name="date" required="1"/>
+                            <field name="name" required="1"/>
+                            <field name="amount" required="1" sum="Total="/>
+                            <field name="paid"/>
+                            <field name="empty_col"/>
+                        </tree>
+                    </field>
+                </xpath>
+
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_review_all_voucher_list">
+            <field name="name">Vouchers Entries</field>
+            <field name="res_model">account.voucher</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="account_voucher.view_voucher_filter"/>
+        </record>
+
+
+        <!-- This Menu Item must have a parent and an action -->
+        <menuitem id="all_voucher_menu" name="All Vouchers" parent="account.menu_finance" action="action_review_all_voucher_list" sequence="3"/>
+
+    </data>
+</odoo>

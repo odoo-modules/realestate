@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="unit_release_tree_view" model="ir.ui.view">
+            <field name="name">unit.release.tree</field>
+            <field name="model">unit.release</field>
+            <field name="arch" type="xml">
+                <tree colors="blue:state == 'draft';black:state == 'confirmed';green:state == 'contracted'" string="Building Unit Reservation">                
+                    <field name="name"/>
+                    <field name="partner_id1"/>                           
+                    <field name="partner_id2"/>   
+                    <field name="user_id"/>                                                   
+                    <field name="date"/>                                                                                                    
+                    <field name="building_code"/>   
+                    <field name="unit_code"/>                           
+                    <field name="floor"/>                           
+                    <field name="address"/>                           
+                    <field name="pricing"/> 
+                    <field name="state" />                                                         
+                </tree>
+            </field>
+        </record>
+        <record id="unit_release_form_view" model="ir.ui.view">
+            <field name="name">unit.release.form</field>
+            <field name="model">unit.release</field>
+            <field name="arch" type="xml">
+                <form string="Building Unit Release">
+                    <header>
+                        <button name="action_confirm" type="object" attrs="{'invisible':['|',('state','=','confirmed'),('state','=','contracted')]}" string="Confirm" class="oe_highlight"/>
+                        <button name="action_contract" type="object" attrs="{'invisible':['|',('state','=','draft'),('state','=','contracted')]}" string="Generate Contract" class="oe_highlight"/>                      
+                        <field name="state" widget="statusbar" statusbar_visible="draft,confirmed,contracted" />                        
+                    </header>                                           
+                    <sheet>
+                    <group>
+                        <group string="Release Data">     
+                            <field name="contract_id"/>    
+                            <field name="name"/>                                              
+                            <field name="partner_id1"/>                           
+                            <field name="partner_id2"/>   
+                            <field name="user_id" readonly="1"/>                                                   
+                            <field name="date"/>                           
+                        </group>
+                        <group string="Building">   
+                            <field name="city" />                                                                                                
+                            <field name="region_id" />                                                                                                
+                            <field name="building" />                           
+                            <field name="building_code"/>                           
+                        </group>                      
+                    </group>
+                        <separator string="Building Unit" colspan="4"/>
+                    <group>
+                        <group>                        
+                            <field name="building_unit" options="{'no_create': True, 'no_open': True}" />
+                            <field name="unit_code"/>                           
+                            <field name="floor"/>                           
+                            <field name="address"/>                           
+                            <field name="pricing"/>                                               
+                        </group>  
+                        <group>
+                            <field name="type"/>                           
+                            <field name="status"/>                           
+                            <field name="building_area"/>  
+                            <field name="template_id" />                                                            
+                        </group>
+                    </group>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="activity_ids" widget="mail_activity"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record id="unit_release_form_action" model="ir.actions.act_window">
+            <field name="name">Units Release</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">unit.release</field>
+            <field name="view_type">form</field>
+            <field name="view_id" ref="unit_release_tree_view"/>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click to add a new Building Unit Release
+              </p>
+            </field>
+        </record>
+                
+      <menuitem
+      id="menu_release_main"
+      name="Units Release"
+      action="unit_release_form_action"
+      parent="itsys_real_estate.menu_itsys_real_estate"
+      sequence="95"/>
+              
+      <!--<menuitem action="unit_release_form_action" id="menu_unit_release_form_action" parent="menu_release_main"/>            -->
+    </data>
+</odoo>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="due_installment_report_view_form" model="ir.ui.view">
+            <field name="name">due.installment.report.form</field>
+            <field name="model">due.installment.report</field>
+            <field name="arch" type="xml">
+                <form string="">
+                    <sheet>
+                        <group>
+                            <field name="date_from"/>
+                            <field name="date_to"/>
+                            <field name="partner_id" options="{'no_create':True,'no_edit':True}"/>
+                            <field name="unit_id" options="{'no_create':True,'no_edit':True}"/>
+                        </group>
+                    </sheet>
+                    <footer>
+                        <button string="Search" name="action_search_due_inst" class="btn-primary" type="object"
+                                icon="fa-search"/>
+                        <button string="Cancel" class="btn-default" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="due_installment_report_action_window" model="ir.actions.act_window">
+            <field name="name">Due Installment Report</field>
+            <field name="res_model">due.installment.report</field>
+            <field name="view_mode">form</field>
+            <field name="view_type">form</field>
+            <field name="target">new</field>
+        </record>
+
+        <!-- This Menu Item Must have a parent -->
+        <menuitem id="data_analysis_menu" name="Data Analysis" parent="itsys_real_estate.menu_itsys_real_estate"
+                  sequence="401"/>
+        <!-- This Menu Item must have a parent and an action -->
+        <menuitem id="due_inst_menu" name="Due Installments" parent="data_analysis_menu"
+                  action="due_installment_report_action_window" sequence="1"/>
+
+
+    </data>
+</odoo>

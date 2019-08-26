@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- Inherit Form View to Modify it -->
+        <record id="installment_template_form_view" model="ir.ui.view">
+            <field name="name">installment.template.form</field>
+            <field name="model">installment.template</field>
+            <field name="inherit_id" ref="itsys_real_estate.installment_template_form_view"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//field[@name='adv_payment_rate']" position="after">
+                    <field name="rate"/>
+                </xpath>
+
+            </field>
+        </record>
+
+
+    </data>
+</odoo>

@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- QWeb Reports -->
+        <report
+                id="inst_rec_voucher_report"
+                model="account.voucher"
+                report_type="qweb-pdf"
+                string="Installment Received voucher"
+                name="real_estate_custom.inst_rec_voucher_report_template"
+                file="real_estate_custom.inst_rec_voucher_report_template"
+        />
+
+        <template id="inst_rec_voucher_report_template">
+            <t t-call="web.html_container">
+                 <t t-foreach="docs" t-as="o">
+                   <t t-call="web.external_layout">
+<!--                    <t t-foreach="docs" t-as="o">-->
+                        <div class="page" dir="rtl">
+                            <header>
+                                <table>
+                                    <tr width="100%">
+                                        <div>
+                                            <td  width="30%">
+                                                <div align="right">
+                                                    <p><b><h4>مؤسسة ضيف</h4></b></p>
+                                                    <p><h4>للتجاره والاستثمار العقارى</h4></p>
+                                                </div>
+                                            </td>
+
+                                            <td width="40%">
+                                                <img src="real_estate_custom/static/src/def_logo.png"/>
+                                            </td>
+
+                                            <td width="30%" align="left">
+                                                <div>
+                                                    <p><b><h3>DIEF EST</h3></b></p>
+                                                    <p><h4>Trading &amp;Real</h4></p>
+                                                    <p><h4>Estate Investment</h4></p>
+                                                </div>
+                                            </td>
+
+                                        </div>
+                                    </tr>
+                                </table>
+
+                                <hr/>
+
+                                <h2 align="center">Installment Received voucher</h2>
+
+                                <table width="100%">
+                                    <tr width="100%">
+                                        <td width="20%">
+                                            <h4><strong>التاريخ:    </strong></h4>
+                                        </td>
+                                        <td width="30%">
+                                            <h4><span t-field="o.date"/></h4>
+                                        </td>
+
+                                        <td width="30%" align="left">
+                                            <h4><span t-field="o.amount"/></h4>
+                                        </td>
+
+                                        <td width="20%" align="left">
+                                            <h4><strong>:Total  </strong></h4>
+                                        </td>
+                                    </tr>
+                                </table>
+
+                                <br/><br/>
+
+                            </header>
+
+                            <table width="100%">
+                                <tr width="100%">
+                                    <td width="30%">
+                                        <h4><strong>استلمنا من السيد/الساده: </strong> </h4>
+                                    </td>
+
+                                    <td width="40%" align="center">
+                                        <h4> <span t-field="o.partner_id"/></h4>
+                                    </td>
+
+                                    <td width="30%" align="left">
+                                        <h4><strong>:Received From Mr/Mrs </strong></h4>
+                                    </td>
+
+                                </tr>
+                            </table>
+                            <br/>
+                            <table width="100%">
+                                <tr width="100%">
+                                    <td width="20%">
+                                        <h4><strong> مبلغاً وقدره: </strong></h4>
+                                    </td>
+
+                                    <td width="20%">
+                                        <h4><strong> فقط </strong></h4>
+                                    </td>
+
+
+                                    <td width="20%">
+                                        <h4><span t-field="o.to_text"/></h4>
+                                    </td>
+
+                                    <td width="20%">
+                                        <h4><strong> لا غير </strong></h4>
+                                    </td>
+
+                                    <td width="20%" align="left">
+                                        <h4><strong>:Amount </strong></h4>
+                                    </td>
+
+                                </tr>
+                            </table>
+                            <br/><br/>
+
+                            <table width="100%">
+                                <tr width="100%">
+                                    <td width="15%">
+                                        <h4><strong>طريقة الدفع: </strong></h4>
+                                    </td>
+                                    <td width="25%" align="center">
+                                        <h4><span t-field="o.payment_journal_id"/> </h4>
+                                    </td>
+                                    <td width="10%">
+                                        <h4><strong>تاريخ: </strong></h4>
+                                    </td>
+                                    <td width="25%" align="center">
+                                        <h4><span t-field="o.account_date"/> </h4>
+                                    </td>
+                                    <td width="25%" align="left">
+                                        <h4><strong>:Pyment Method </strong></h4>
+                                    </td>
+                                </tr>
+                            </table>
+                            <br/><br/>
+
+                            <table width="100%">
+                                <tr width="100%">
+                                    <td width="10%">
+                                        <h4><strong>برج: </strong></h4>
+                                    </td>
+                                    <td width="23%" align="center" >
+                                        <h4><span t-field="o.contract_building.name"/> </h4>
+                                    </td>
+                                    <td width="10%">
+                                        <h4><strong>دور: </strong></h4>
+                                    </td>
+                                    <td width="20%" align="center">
+                                        <h4><span t-field="o.contract_unit.floor"/> </h4>
+                                    </td>
+                                    <td width="10%">
+                                        <h4><strong>شقه: </strong></h4>
+                                    </td>
+                                    <td width="20%" align="center">
+                                        <h4><span t-field="o.contract_unit.name"/></h4>
+                                    </td>
+                                </tr>
+                            </table>
+                            <br/><br/>
+
+                            <table width="100%">
+                                <tr width="100%">
+                                    <td width="100%">
+                                        <h4><strong>وذلك عن: </strong> <span t-field="o.text_msg"/></h4>
+                                    </td>
+
+                                </tr>
+                            </table>
+                            <br/><br/><br/><br/><br/>
+
+                            <table width="100%">
+                                <tr width="100%">
+                                    <td width="30%">
+                                        <h4><strong>المستلم Received by </strong> </h4>
+                                    </td>
+                                    <td width="30%" align="center">
+                                        <h4><strong>المحاسب Accountant </strong> </h4>
+                                    </td>
+                                    <td width="40%" align="left">
+                                        <h4><strong>المدير Manager</strong> </h4>
+                                    </td>
+                                </tr>
+
+                                <tr width="100%">
+                                    <td width="30%">
+                                        <h4><span t-esc="user.name"/></h4>
+                                    </td>
+                                    <td width="30%" align="center">
+                                        <h4><strong>...........................</strong> </h4>
+                                    </td>
+                                    <td width="40%" align="left">
+                                        <h4><strong>............................</strong> </h4>
+                                    </td>
+                                </tr>
+
+                            </table>
+
+                        </div>
+                    </t>
+<!--                       </t>-->
+                </t>
+            </t>
+        </template>
+
+    </data>
+</odoo>

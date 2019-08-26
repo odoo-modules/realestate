@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+        <record id="email_template_installment_notification" model="mail.template">
+            <field name="name">Real Estate installment - Send by Email</field>
+            <field name="email_from">${(object.contract_user_id.email and '%s &lt;%s&gt;' % (object.contract_user_id.name, object.contract_user_id.email) or '')|safe}</field>
+            <field name="subject">Hello </field>
+            <field name="subject">${object.company_id.name} - Installment reminder</field>
+            <field name="partner_to">${object.contract_partner_id.id}</field>
+            <field name="model_id" ref="itsys_real_estate.model_loan_line_rs_own"/>
+            <field name="auto_delete" eval="True"/>
+            <field name="lang">${object.contract_partner_id.lang}</field>
+            <field name="body_html"><![CDATA[
+Dear ${object.contract_partner_id.name},
+
+We would like to remind you with installment payment ${object.amount} due in ${object.date}
+
+Regarding property # ${object.contract_building_unit.code}
+
+
+Thanks and best regards,
+
+${object.company_id.name}
+
+]]></field>
+        </record>
+
+    </data>
+</odoo>

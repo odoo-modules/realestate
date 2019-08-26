@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<odoo>
+    <data>
+
+         <record id="view_res_partner" model="ir.ui.view">
+            <field name="name">res.partner.inherit.form</field>
+            <field name="model">res.partner</field> 
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="priority" eval="50"/>
+            <field name="arch" type="xml">
+                <field name="function" position="before"> 
+                    <field name="ss_number"/>
+                </field>
+            </field>
+        </record>
+        
+        <record id="view_res_company" model="ir.ui.view">
+            <field name="name">res.company.inherit.form</field>
+            <field name="model">res.company</field> 
+            <field name="inherit_id" ref="base.view_company_form"/>
+            <field name="priority" eval="50"/>
+            <field name="arch" type="xml">
+                <field name="phone" position="before"> 
+                    <field name="id_number" />
+                </field>
+            </field>
+        </record>
+        
+    </data> 
+</odoo>

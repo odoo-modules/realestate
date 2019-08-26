@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <menuitem
+                id="menu_itsys_real_estate"
+                name="Real Estate"
+                sequence="28"/>
+
+        <record model="ir.ui.view" id="building_form">
+            <field name="name">building.form</field>
+            <field name="model">building</field>
+            <field name="priority">1</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Real Estate">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="name"/>
+                                <field name="code" requied="1"/>
+                                <field name="region_id"/>
+                                <field name="city_id"/>
+                                <field name="country_id"/>
+                            </group>
+                            <group >
+                                <field name="partner_from"/>
+                                <field name="partner_to"/>
+                                <field name="active"/>
+                            </group>
+                        </group>
+
+                        <notebook colspan="4">
+                            <page string="invisible" invisible="1"/>
+                        </notebook>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+
+        <record model="ir.ui.view" id="building_base_pages_form">
+            <field name="name">building.base_pages.form</field>
+            <field name="model">building</field>
+            <field name="inherit_id" ref="building_form"/>
+            <field name="priority" eval="20"/>
+            <field name="arch" type="xml">
+                <notebook>
+                    <page string="Basic Information">
+                        <group>
+                            <group>
+                                <field name="type"/>
+                                <field name="status"/>
+                                <field name="building_area"/>
+                                <field name="land_area"/>
+                                <field name="constructed"/>
+                                <field name="lift"/>
+                                <field name="pricing"/>
+                            </group>
+                            <group>
+                                <field name="surface"/>
+                                <field name="garage"/>
+                                <field name="garden"/>
+                                <field name="north"/>
+                                <field name="south"/>
+                                <field name="east"/>
+                                <field name="west"/>
+                            </group>
+                        </group>
+                    </page>
+                    <!--<page string="Building Images">-->
+                    <!--<field name="multi_images" widget="image_multi">-->
+                    <!--<tree editable="bottom">-->
+                    <!--<field name="image"/>-->
+                    <!--<field name="description"/>-->
+                    <!--<field name="title"/>-->
+                    <!--</tree>-->
+                    <!--</field>-->
+                    <!--</page>-->
+                    <page string="Additional Information">
+                        <group>
+                            <group>
+                                <field name="license_code"/>
+                                <field name="license_date"/>
+                                <field name="date_added"/>
+                                <field name="license_location"/>
+                            </group>
+                        </group>
+                    </page>
+                    <page string="Geolocation">
+                        <group>
+                            <group>
+                                <field name="address" widget="place_autocomplete" class="oe_inline"/>
+                            </group>
+                        </group>
+                    </page>
+                    <page string="Notes">
+                        <field name="note" colspan="4" nolabel="1"/>
+                    </page>
+                </notebook>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="building_list">
+            <field name="name">building.list</field>
+            <field name="model">building</field>
+            <field name="priority">1</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Building" >
+                    <field name="code"/>
+                    <field name="name"/>
+                    <field name="region_id"/>
+                    <field name="city_id"/>
+                    <field name="country_id"/>
+                    <!--<field name="city"/>
+                    <field name="address"/> -->
+                    <field name="partner_id"/>
+                    <field name="land_area"/>
+                    <field name="building_area"/>
+                    <field name="constructed"/>
+                    <field name="lift"/>
+                </tree>
+            </field>
+        </record>
+        <record id="building_filter" model="ir.ui.view">
+            <field name="name">building.list.filter</field>
+            <field name="model">building</field>
+            <field name="type">search</field>
+            <field name="arch" type="xml">
+                <search string="Top Search">
+                    <group>
+                        <field name="name"/>
+                        <field name="partner_id"/>
+                    </group>
+                    <newline/>
+                    <group expand="0" string="Group By...">
+                        <filter string="Partner" domain="[]"  context="{'group_by':'partner_id'}"/>
+                        <filter string="Country" domain="[]"  context="{'group_by':'country_id'}"/>
+                        <filter string="City" domain="[]"  context="{'group_by':'city_id'}"/>
+                        <filter string="Region" domain="[]"  context="{'group_by':'region_id'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+        <record model="ir.actions.act_window" id="building_act1">
+            <field name="name">Building</field>
+            <field name="res_model">building</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="building_list"/>
+            <field name="search_view_id" ref="building_filter"/>
+        </record>
+        <record model="ir.actions.act_window.view" id="building_act1_view2">
+            <field name="sequence" eval="1"/>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="building_list"/>
+            <field name="act_window_id" ref="building_act1"/>
+        </record>
+        <record model="ir.actions.act_window.view" id="building_act1_view1">
+            <field name="sequence" eval="2"/>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="building_form"/>
+            <field name="act_window_id" ref="building_act1"/>
+        </record>
+        <menuitem
+                id="menu_building_list"
+                name="Building structure"
+                parent="menu_itsys_real_estate"
+                sequence="1"/>
+        <menuitem
+                sequence="3"
+                action="building_act1"
+                id="menu_building_list_sub"
+                parent="menu_building_list"/>
+
+        <record model="ir.ui.view" id="building_list_web">
+            <field name="name">building.list_web</field>
+            <field name="model">building</field>
+            <field name="priority">1</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Real Estate" >
+                    <field name="sequence"/>
+                    <field name="name"/>
+                    <field name="partner_id"/>
+                    <field name="usage"/>
+                    <field name="surface" sum="Total Surface"/>
+                    <field name="lease_target"/>
+                    <field name="staircase"/>
+                    <field name="floor"/>
+                    <field name="lift"/>
+                    <field name="category"/>
+                    <field name="old_building"/>
+                    <field name="handicap"/>
+                    <field name="parking_place_rentable"/>
+                </tree>
+            </field>
+        </record>
+        <record model="ir.actions.act_window" id="building_act1_web">
+            <field name="name">Top (Test)</field>
+            <field name="res_model">building</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="building_filter"/>
+            <field name="view_id" ref="building_list_web"/>
+        </record>
+        <record model="ir.actions.act_window.view" id="building_act1_view2_web">
+            <field name="sequence" eval="1"/>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="building_list_web"/>
+            <field name="act_window_id" ref="building_act1_web"/>
+        </record>
+        <record model="ir.actions.act_window.view" id="building_act1_view1_web">
+            <field name="sequence" eval="2"/>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="building_form"/>
+            <field name="act_window_id" ref="building_act1_web"/>
+        </record>
+        <menuitem
+                id="menu_settings"
+                name="Settings"
+                parent="menu_itsys_real_estate"
+                sequence="2000"/>
+
+    </data>
+</odoo>

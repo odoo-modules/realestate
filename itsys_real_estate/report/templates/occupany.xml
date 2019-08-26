@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<template id="report_occupancy">
+			<t t-call="web.html_container">
+				<t t-call="web.internal_layout">
+					<div class="page">
+						<style type="text/css">
+							table.gridtable td, th {
+							border: 1px solid #ddd;
+							text-align: left;
+							}
+
+							table.gridtable {
+							border-collapse: collapse;
+							width: 100%;
+							}
+
+							table.gridtable th, td {
+							padding: 5px;
+							}
+							table.report_table {
+							font-size: 14px !important;
+							border-collapse: collapse !important;
+							width: 100% !important;
+							}
+
+							table.report_table th, table.report_table td {
+							padding: 8px !important;
+							text-align: center !important;
+							}
+
+							table.report_table tr:nth-child(even){background-color: #f2f2f2 !important;}
+
+							table.report_table th {
+							background-color: #000080 !important;
+							color: white !important;
+							}
+
+						</style>
+						<h2>Occupancy Rates</h2>
+						<table class="report_table">
+							<tr>
+								<th>Country</th>
+								<th>City</th>
+								<th>Region</th>
+								<th>Building</th>
+								<th>Unit</th>
+								<th>Type</th>
+								<th>Reference</th>
+								<th>Status</th>
+								<th>Date</th>
+							</tr>
+							<tr t-foreach="get_units_status" t-as="line">
+								<td><span t-esc="line['country']"/></td>
+								<td><span t-esc="line['city']"/></td>
+								<td><span t-esc="line['region']"/></td>
+								<td><span t-esc="line['building']"/></td>
+								<td><span t-esc="line['name']"/></td>
+								<td><t t-if="line['type']=='Ownership'">Ownership</t><t t-if="line['type']=='Rental'">Rental</t></td>
+								<td><t t-if="line['type']=='Ownership'"><span t-esc="line['ownership']"/></t><t t-if="line['type']=='Rental'"><span t-esc="line['rental']"/></t></td>
+								<td><t t-if="line['state']=='free'">Free</t><t t-if="line['type']=='reserved'">Reserved</t><t t-if="line['type']=='sold'">Sold</t></td>
+								<td><t t-if="line['type']=='Ownership'"><span t-esc="line['ownership_date']"/></t><t t-if="line['type']=='Rental'"><span t-esc="line['rental_date']"/></t></td>
+							</tr>
+						</table>
+					</div>
+				</t>
+			</t>
+		</template>
+
+	</data>
+</odoo>
+
+

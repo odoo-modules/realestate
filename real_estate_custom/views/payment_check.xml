@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+
+        <!-- Inherit Form View to Modify it -->
+        <record id="customer_payment_form_view" model="ir.ui.view">
+            <field name="name">customer.payment.check.form</field>
+            <field name="model">customer.payment.check</field>
+            <field name="inherit_id" ref="itsys_real_estate.customer_payment_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='journal']" position="replace">
+                    <field name="journal" domain="[('type','in',['cash','bank','receive_check'])]"/>
+                </xpath>
+                <xpath expr="//field[@name='loan_line']" position="replace">
+                    <notebook>
+                        <page string="Installments">
+                            <field name="type" invisible="1"/>
+                            <field name="loan_line" string="Installments">
+                                <tree string="Installments" editable="bottom">
+                                    <field name="installment_line_id" invisible="1"/>
+                                    <field name="to_be_paid"/>
+                                    <field name="date" readonly="1"/>
+                                    <field name="name"/>
+                                    <field name="amount" required="1" string="Amount" readonly="1"/>
+                                    <field name="due_amount" readonly="1"/>
+                                    <field name="input_amount"/>
+                                    <field name="discount_cash"
+                                           attrs="{'readonly': [('discount_percent','&gt;', '0')]}"/>
+                                    <field name="discount_percent"
+                                           attrs="{'readonly': [('discount_cash','&gt;', '0')]}"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Checks" attrs="{'invisible':[('type','!=','receive_check')]}">
+
+                            <field name="check_ids">
+                                <tree editable="top">
+                                    <field name="check_name"/>
+                                    <field name="check_number"/>
+                                    <field name="amount"/>
+                                    <field name="check_payment_date"/>
+                                    <field name="check_issue_date"/>
+                                    <field name="bank_id"/>
+                                    <field name="currency_id" invisible="1"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </xpath>
+
+
+            </field>
+        </record>
+
+
+        <!-- Inherit Form View to Modify it -->
+        <record id="check_payment_form_statusbar_customer" model="ir.ui.view">
+            <field name="name">check.payment.transaction.form</field>
+            <field name="model">check.payment.transaction</field>
+            <field name="inherit_id" ref="account_check_payment.check_payment_form_statusbar_customer"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//field[@name='payment_type']" position="after">
+                    <field name="analytic_account_id"/>
+                    <field name="loan_ids" widget="many2many_tags" readonly="1"/>
+                </xpath>
+
+            </field>
+        </record>
+
+
+    </data>
+</odoo>

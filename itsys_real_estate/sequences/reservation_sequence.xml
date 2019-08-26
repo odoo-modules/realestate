@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+        <record id="sequence_unit_reservation" model="ir.sequence">
+            <field name="name">Unit Reservation</field>
+            <field name="code">unit.reservation</field>
+            <field name="prefix">RE/%(range_year)s/</field>
+            <field eval="1" name="number_next"/>
+            <field eval="1" name="number_increment"/>
+            <field eval="True" name="use_date_range"/>
+            <field eval="False" name="company_id"/>
+            <field name="padding">4</field>
+        </record> 
+    </data>
+</odoo>

@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="sale_commission_tree">
+            <field name="name">Sales commissions tree</field>
+            <field name="model">sale.commission</field>
+            <field name="arch" type="xml">
+                <tree string="Commissions">
+                    <field name="name" />
+                    <field name="commission_type" />
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="sale_commission_form">
+            <field name="name">Sales commissions form</field>
+            <field name="model">sale.commission</field>
+            <field name="arch" type="xml">
+                <form string="Commission">
+                    <sheet>
+                    <group string="General information">
+                        <group>
+                            <field name="name" />
+                            <field name="active" />
+                        </group>
+                        <group>
+                            <field name="commission_type" />
+                            <field name="contract_state"/>
+                            <field name="apply_to"/>
+                        </group>
+                    </group>
+                    <group string="Rates definition">
+                        <field name="fix_qty"
+                               attrs="{'invisible': [('commission_type', '!=', 'fixed')]}" />
+                       <field name="leader_fix_qty"
+                               attrs="{'invisible': [('commission_type', '!=', 'fixed')]}" />
+                        <field name="sections" widget="one2many_list"
+                               attrs="{'invisible': [('commission_type', '!=', 'section')]}">
+                            <tree string="sections" editable="bottom">
+                                <field name="amount_from" />
+                                <field name="amount_to" />
+                                <field name="percent" />
+                                <field name="leader_percent" attrs="{'invisible': [('parent.apply_to', '!=', 'team')]}"/>
+                            </tree>
+                        </field>
+                    </group>
+                    <group string="Sales representatives">
+                        <field name="salesmen"
+                       attrs="{'invisible': [('apply_to', '!=', 'salesman')]}" />
+
+                        <field name="sales_team"
+                       attrs="{'invisible': [('apply_to', '!=', 'team')]}"/>
+                    </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_commission">
+            <field name="name">Commission types</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">sale.commission</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem name="Commission"
+                  id="menu_sale_commissions"
+                  sequence="199"
+                  parent="itsys_real_estate.menu_itsys_real_estate" />
+
+        <menuitem name="Commission Types"
+                  id="menu_sale_commissions_types"
+                  parent="menu_sale_commissions"
+                  sequence="199"
+                  action="action_commission" />
+
+        <record model="ir.ui.view" id="sale_commission_line_tree">
+            <field name="name">Sales commissions line tree</field>
+            <field name="model">commission.line</field>
+            <field name="arch" type="xml">
+                <tree string="Commissions" create="false" edit="false">
+                    <field name="date" />
+                    <field name="salesman" />
+                    <field name="commission" />
+                    <field name="amount" />
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_commission_lines">
+            <field name="name">Commission Lines</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">commission.line</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree</field>
+        </record>
+
+        <menuitem name="Commission Lines"
+                  id="menu_sale_commissions_lines"
+                  sequence="200"
+                  parent="menu_sale_commissions"
+                  action="action_commission_lines" />
+
+        <record id="res_users_form_view" model="ir.ui.view">
+            <field name="name">ownership.contract.form.view</field>
+            <field name="model">ownership.contract</field>
+            <field name="inherit_id" ref="itsys_real_estate.ownership_contract_form_view" />
+            <field name="arch" type="xml">
+              <xpath expr="//field[@name='user_id']" position="after">
+                <field name="team_id"/>
+              </xpath>
+                <notebook position="inside">
+                    <page string="Commission">
+                        <group>
+                            <!--<button type="object" string="Get commission" name="get_commission"/>-->
+                            <field name="commission_line" widget="one2many_list"
+                                   colspan="4"
+                                   nolabel="1">
+                                <tree string="Commission Lines" editable="bottom">
+                                    <field name="salesman" />
+                                    <field name="amount" />
+                                </tree>
+                            </field>
+                        </group>
+                    </page>
+                </notebook>
+            </field>
+        </record>
+
+    </data>
+</odoo>

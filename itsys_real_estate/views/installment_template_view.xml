@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Building unitription -->
+        <record id="installment_template_tree_view" model="ir.ui.view">
+            <field name="name">installment.template.tree</field>
+            <field name="model">installment.template</field>
+            <field name="arch" type="xml">
+                <tree string="installment template">
+                        <field name="name"/>                                               
+                        <field name="duration_month"/>                           
+                        <field name="duration_year"/>                           
+                        <field name="annual_raise" invisible="1"/>
+                        <field name="repetition_rate"/>                                                      
+                        <field name="adv_payment_rate"/>                                                      
+                </tree>
+            </field>
+        </record>
+        <record id="installment_template_form_view" model="ir.ui.view">
+            <field name="name">installment.template.form</field>
+            <field name="model">installment.template</field>
+            <field name="arch" type="xml">
+                <form string="installment template">
+                    <sheet>                    
+                        <h1>
+                            <field name="name" default_focus="1" placeholder="Name"/>
+                        </h1>
+                        <group>                        
+                            <field name="duration_month" attrs="{'readonly': [('duration_year','>', '0')]}"/>                           
+                            <field name="duration_year" attrs="{'readonly': [('duration_month','>', '0')]}"/>                           
+                            <field name="annual_raise" invisible="1"/>
+                            <field name="repetition_rate"/> 
+                            <field name="adv_payment_rate"/>                                                                                                        
+                            <field name="deduct"/>                                                                                                        
+                        </group>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+        <record id="installment_template_form_action" model="ir.actions.act_window">
+            <field name="name">Installment Template</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">installment.template</field>
+            <field name="view_type">form</field>
+            <field name="view_id" ref="installment_template_tree_view"/>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click to add a new installment template
+              </p>
+            </field>
+        </record>
+        <menuitem action="installment_template_form_action" 
+                  id="menu_installment_template_form_action" 
+                  parent="itsys_real_estate.menu_settings" />
+                    
+    </data>
+</odoo>

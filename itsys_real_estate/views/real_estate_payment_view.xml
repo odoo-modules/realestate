@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+  <menuitem id="real_estate_payment_menu" name="Payments" parent="itsys_real_estate.menu_itsys_real_estate" sequence="90"/>
+         <menuitem name="Ownership contracts" groups="itsys_real_estate.group_payments" parent="real_estate_payment_menu" id="customer_payment_menu" action="action_customer_payment_check" /> 
+         <menuitem name="Units Refund" groups="itsys_real_estate.group_payments" parent="real_estate_payment_menu" id="customer_refund_menu" action="action_customer_payment_refund" />      
+      <menuitem name="Rental contracts" groups="itsys_real_estate.group_payments" action="action_customer_rental_payment_check" id="menu_rental_pay_form_action" parent="real_estate_payment_menu" sequence="30" />            
+
+    </data>
+</odoo>

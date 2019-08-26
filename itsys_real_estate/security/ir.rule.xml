@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<odoo>
+    <data>
+        <record id="realestate_see_own_reservations" model="ir.rule">
+            <field name="name">See Own Reservations</field>
+            <field name="model_id" ref="model_unit_reservation"/>
+            <field name="domain_force">['|',('user_id', '=', False),('user_id', '=', user.id)]</field>
+            <field name="groups" eval="[(4, ref('itsys_real_estate.group_reservation'))]"/>
+        </record>
+        
+        <record id="realestate_see_own_ownership_contracts" model="ir.rule">
+            <field name="name">See Own Ownership Contracts</field>
+            <field name="model_id" ref="model_ownership_contract"/>
+            <field name="domain_force">['|',('user_id', '=', False),('user_id', '=', user.id)]</field>
+            <field name="groups" eval="[(4, ref('itsys_real_estate.group_ownership_rental_contracts'))]"/>
+        </record>  
+        
+        <record id="realestate_see_own_rental_contracts" model="ir.rule">
+            <field name="name">See Own Rental Contracts</field>
+            <field name="model_id" ref="model_rental_contract"/>
+            <field name="domain_force">['|',('user_id', '=', False),('user_id', '=', user.id)]</field>
+            <field name="groups" eval="[(4, ref('itsys_real_estate.group_ownership_rental_contracts'))]"/>
+        </record>   
+        
+        <record id="realestate_see_own_releases" model="ir.rule">
+            <field name="name">See Own Releases</field>
+            <field name="model_id" ref="model_unit_release"/>
+            <field name="domain_force">['|',('user_id', '=', False),('user_id', '=', user.id)]</field>
+            <field name="groups" eval="[(4, ref('itsys_real_estate.group_ownership_rental_contracts'))]"/>
+        </record>                                                 
+
+    </data>
+</odoo>

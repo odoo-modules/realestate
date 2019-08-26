@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+        <record model="building.type" id="building_type_1">
+            <field name="name">Apartment</field>
+        </record>
+        <record model="building.type" id="building_type_2">
+            <field name="name">Land</field>
+        </record>
+        <record model="building.type" id="building_type_3">
+            <field name="name">Villa</field>
+        </record>
+        <record model="building.type" id="building_type_4">
+            <field name="name">Building</field>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,11 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+check_payment_transaction_all,check.payment.transaction.all,model_check_payment_transaction,,1,0,0,0
+check_payment_transaction_user,check.payment.transaction.user,model_check_payment_transaction,base.group_user,1,0,0,0
+check_payment_transaction_system,check.payment.transaction.system,model_check_payment_transaction,base.group_system,1,1,1,1
+check_payment_transaction_billing,check.payment.transaction.billing,model_check_payment_transaction,account.group_account_invoice,1,1,1,1
+check_payment_transaction_accountant,check.payment.transaction.accountant,model_check_payment_transaction,account.group_account_user,1,1,1,1
+check_payment_transaction_payment_all,check.payment.transaction.payment.all,model_check_payment_transaction_payment,,1,0,0,0
+check_payment_transaction_payment_user,check.payment.transaction.payment.user,model_check_payment_transaction_payment,base.group_user,1,0,0,0
+check_payment_transaction_payment_system,check.payment.transaction.payment.system,model_check_payment_transaction_payment,base.group_system,1,1,1,1
+check_payment_transaction_payment_billing,check.payment.transaction.payment.billing,model_check_payment_transaction_payment,account.group_account_invoice,1,1,1,1
+check_payment_transaction_payment_accountant,check.payment.transaction.payment.accountant,model_check_payment_transaction_payment,account.group_account_user,1,1,1,1

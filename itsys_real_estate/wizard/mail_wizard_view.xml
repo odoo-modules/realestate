@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!--&lt;!&ndash; wizard action on res.partner &ndash;&gt;-->
+        <!--<act_window id="partner_wizard_action_own"-->
+            <!--name="Send mail"-->
+            <!--src_model="loan.line.rs.own"-->
+            <!--res_model="mail.wizard"-->
+            <!--view_type="form" view_mode="form"-->
+            <!--key2="client_action_multi" target="new"/>-->
+
+        <!--&lt;!&ndash; wizard view &ndash;&gt;-->
+        <!--&lt;!&ndash;<record id="wizard_view" model="ir.ui.view">&ndash;&gt;-->
+            <!--&lt;!&ndash;<field name="name">Send mail</field>&ndash;&gt;-->
+            <!--&lt;!&ndash;<field name="model">mail.wizard</field>&ndash;&gt;-->
+            <!--&lt;!&ndash;<field name="arch" type="xml">&ndash;&gt;-->
+                <!--&lt;!&ndash;<form string="Send E-mail">&ndash;&gt;-->
+                    <!--&lt;!&ndash;<p>Do you want to send e-mail to these customers?</p>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<footer>&ndash;&gt;-->
+                        <!--&lt;!&ndash;<button string="Confirm" name="action_apply" type="object" class="oe_highlight"/>&ndash;&gt;-->
+                        <!--&lt;!&ndash;or&ndash;&gt;-->
+                        <!--&lt;!&ndash;<button string="Cancel" class="oe_link" special="cancel" />&ndash;&gt;-->
+                    <!--&lt;!&ndash;</footer>&ndash;&gt;-->
+                <!--&lt;!&ndash;</form>&ndash;&gt;-->
+            <!--&lt;!&ndash;</field>&ndash;&gt;-->
+        <!--&lt;!&ndash;</record>&ndash;&gt;-->
+
+    <!--<record id="ir_actions_server_notification_email" model="ir.actions.server">-->
+        <!--<field name="name">Send notification mail</field>-->
+        <!--<field name="type">ir.actions.server</field>-->
+        <!--<field name="model_id" ref="model_loan_line_rs_own"/>-->
+        <!--<field name="state">code</field>-->
+        <!--<field name="code">-->
+            <!--if records:-->
+                <!--action = records.action_email_send()-->
+        <!--</field>-->
+        <!--<field name="binding_model_id" ref="itsys_real_estate.model_loan_line_rs_own"/>-->
+    <!--</record>-->
+
+        <!--<act_window id="partner_wizard_action_rent"-->
+            <!--name="Send mail"-->
+            <!--src_model="loan.line.rs.rent"-->
+            <!--res_model="mail.wizard"-->
+            <!--view_type="form" view_mode="form"-->
+            <!--key2="client_action_multi" target="new"/>-->
+
+        <!--&lt;!&ndash; wizard view &ndash;&gt;-->
+        <!--<record id="wizard_view_rent" model="ir.ui.view">-->
+            <!--<field name="name">Send mail</field>-->
+            <!--<field name="model">mail.wizard.rent</field>-->
+            <!--<field name="arch" type="xml">-->
+                <!--<form string="Send E-mail">-->
+                    <!--<p>Do you want to send e-mail to these customers?</p>                    -->
+                    <!--<footer>-->
+                        <!--<button string="Confirm" name="action_apply" type="object" class="oe_highlight"/>-->
+                        <!--or-->
+                        <!--<button string="Cancel" class="oe_link" special="cancel" />    -->
+                    <!--</footer>-->
+                <!--</form>-->
+            <!--</field>-->
+        <!--</record>        -->
+
+    </data>
+</odoo>

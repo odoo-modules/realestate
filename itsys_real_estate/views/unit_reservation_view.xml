@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Building Unit Reservation -->
+        <record id="unit_reservation_tree_view" model="ir.ui.view">
+            <field name="name">unit.reservation.tree</field>
+            <field name="model">unit.reservation</field>
+            <field name="arch" type="xml">
+                <tree colors="blue:state == 'draft';black:state == 'confirmed';green:state == 'contracted'" string="Building Unit Reservation">
+                    <field name="name"/>
+                    <field name="partner_id"/>
+                    <field name="building" />   
+                    <field name="building_unit"/>  
+                    <field name="user_id"/>                                               
+                    <field name="pricing"/>  
+                    <field name="building" />                           
+                    <field name="building_code"/>                                                 
+                    <field name="building_unit"/>                           
+                    <field name="unit_code"/>                           
+                    <field name="floor"/>                           
+                    <field name="address"/>       
+                    <field name="state"/>           
+                </tree>
+            </field>
+        </record>
+        <record id="unit_reservation_form_view" model="ir.ui.view">
+            <field name="name">unit.reservation.form</field>
+            <field name="model">unit.reservation</field>
+            <field name="arch" type="xml">
+                <form string="Building Unit Reservation">
+                    <header>
+                        <button name="action_confirm" type="object" 
+                                attrs="{'invisible':[('state','!=','draft')]}" 
+                                string="Confirm" class="oe_highlight"/>                      
+                        <button name="action_contract" type="object" 
+                                attrs="{'invisible':['|','|',('state','=','canceled'),('state','=','draft'),('state','=','contracted')]}" 
+                                string="Convert to Contract" class="oe_highlight"/>
+                        <button name="action_cancel" type="object" 
+                                attrs="{'invisible':['|','|',('state','=','canceled'),('state','=','draft'),('state','=','contracted')]}" 
+                                string="Cancel" class="oe_highlight"/>                                              
+                        <field name="state" 
+                               widget="statusbar"                                                               
+                               statusbar_visible="draft,confirmed,contracted" />                                                                             
+                    </header>                       
+                    <sheet>    
+                    <div class="oe_right oe_button_box" name="button_box">
+                       <field name="contract_id" invisible="1"/>
+                       <button type="object"
+                           name="view_contract"
+                           class="oe_inline oe_stat_button"
+                           icon="fa-book"
+                           attrs="{'invisible': [('contract_count', '=', 0)]}">
+                           <field name="contract_count" widget="statinfo" string="Contract"/>
+                       </button> 
+                                             
+                    </div>                                         
+                    <group>                                               
+                        <group string="Reservation Data">                        
+                            <field name="name"/>                           
+                            <field name="user_id"/>  
+	                    <field name="team_id"/>                         
+                            <field name="partner_id" attrs="{'readonly': [('state','!=','draft')]}" required="1"/>                           
+                            <field name="date" attrs="{'readonly': [('state','!=','draft')]}" required="1"/>                           
+                            <field name="date_payment" attrs="{'readonly': [('state','!=','draft')]}" required="1" />    
+                        </group>
+                        <group>
+                          <field name="account_analytic_id" attrs="{'readonly': [('state','!=','draft')]}" />
+                          <field name="account_income" attrs="{'readonly': [('state','!=','draft')]}" />  
+                        </group>                              
+                        <group string="Building">   
+                            <field name="country" attrs="{'readonly': [('state','!=','draft')]}" />                                                                                                
+                            <field name="city" attrs="{'readonly': [('state','!=','draft')]}"/>                                                                                                
+                            <field name="region" attrs="{'readonly': [('state','!=','draft')]}" />                                                                                                
+                            <field name="building" attrs="{'readonly': [('state','!=','draft')]}"/>                           
+                            <field name="building_code" attrs="{'readonly': [('state','!=','draft')]}"/>                           
+                        </group>                      
+                    </group>
+                        <separator string="Building Unit" colspan="4"/>
+                    <group>
+                        <group>                        
+                            <field name="building_unit" options="{'no_create': True, 'no_open': True}"  attrs="{'readonly': [('state','!=','draft')]}"/>
+                            <field name="unit_code" attrs="{'readonly': [('state','!=','draft')]}"/>                           
+                            <field name="floor" attrs="{'readonly': [('state','!=','draft')]}"/>                           
+                            <field name="address" attrs="{'readonly': [('state','!=','draft')]}"/>                           
+                            <field name="pricing" attrs="{'readonly': [('state','!=','draft')]}" />
+                        </group>  
+                        <group>
+                            <field name="type" attrs="{'readonly': [('state','!=','draft')]}"/>                           
+                            <field name="status" attrs="{'readonly': [('state','!=','draft')]}"/>                           
+                            <field name="building_area" attrs="{'readonly': [('state','!=','draft')]}"/>  
+                            <field name="template_id" attrs="{'readonly': [('state','!=','draft')]}" required="1" />                                                            
+                        </group>
+                    </group>
+                    <notebook colspan="2">
+                        <page string="Installments">
+                            <field name="loan_line" >
+                                <tree string="Installments" editable="bottom" >
+                                    <field name="serial" widget="handle" required="1"/>
+                                    <field name="date" required="1"/>
+                                    <field name="name" required="1"/>
+                                    <field name="amount" required="1"/>
+                                    <field name="paid"/>
+                                    <field name="empty_col"/>
+                                    <field name="empty_col"/>
+                                    <field name="empty_col"/>
+                                    <field name="empty_col"/>
+                                    <field name="empty_col"/>
+                                    <field name="empty_col"/>
+                                    <field name="empty_col"/>
+                                    <field name="empty_col"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="activity_ids" widget="mail_activity"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+        <record id="unit_reservation_form_action" model="ir.actions.act_window">
+            <field name="name">Unit Reservation</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">unit.reservation</field>
+            <field name="view_type">form</field>
+            <field name="view_id" ref="unit_reservation_tree_view"/>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click to add a new Building Unit Reservation
+              </p>
+            </field>
+        </record>
+
+        <record model="ir.cron" id="auto_cancel_reservation_sync">
+            <field name="name">Auto Cancel Unit Reservation</field>
+            <field name="model_id" ref="model_unit_reservation"/>
+            <field name="state">code</field>
+            <field name="code">model.auto_cancel_reservation()</field>
+            <field name="active" eval="False"/>
+            <field name="interval_number">1</field>
+            <field name="interval_type">hours</field>
+            <field name="numbercall">-1</field>
+            <field name="doall" eval="False"/>
+        </record>
+
+      <menuitem
+      id="menu_reservation_main"
+      name="Resevations"
+      parent="itsys_real_estate.menu_itsys_real_estate"
+      action="unit_reservation_form_action"
+      sequence="23"/>
+              
+    </data>
+</odoo>
