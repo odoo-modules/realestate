@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-from num2words import num2words
 from odoo import models, fields, api, exceptions, _
 from datetime import date, datetime, time, timedelta
 from odoo.fields import Date, Datetime
@@ -11,31 +10,6 @@ class account_voucher(models.Model):
     _inherit = "account.voucher"
 
     real_estate_ref = fields.Char('Real Estate Ref.')
-    to_text = fields.Char('to_text', compute='_to_text')
-    text_msg = fields.Text('Message')
-    contract_unit = fields.Many2one('product.template', string='Contract Unit', compute='get_unit')
-    contract_building = fields.Many2one('building', string='Contract Building', compute='get_building')
-
-    # test = num2words(amount, lang='ar')
-
-    @api.one
-    @api.depends('amount', 'to_text')
-    def _to_text(self):
-        for voucher in self:
-            test = num2words(voucher.amount, lang='ar')
-            voucher.to_text = str(test)
-
-    @api.one
-    def get_unit(self):
-        for voucher in self:
-            voucher_contract = voucher.env['ownership.contract'].search([('name', '=', self.reference)])
-            voucher.contract_unit = voucher_contract.building_unit
-
-    @api.one
-    def get_building(self):
-        for voucher in self:
-            voucher_contract = voucher.env['ownership.contract'].search([('name', '=', self.reference)])
-            voucher.contract_building = voucher_contract.building
 
     @api.multi
     def proforma_voucher(self):

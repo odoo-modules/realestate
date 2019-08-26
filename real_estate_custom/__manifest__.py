@@ -18,7 +18,7 @@
     'version': '2.0.3',
 
     # any module necessary for this one to work correctly
-    'depends': ['base', 'crm', 'bi_realestate', 'account_check_payment' ,'account_voucher' ],
+    'depends': ['base', 'crm', 'bi_realestate', 'account_check_payment'],
 
     # always loaded
     'data': [
@@ -36,12 +36,8 @@
         'views/installment_template.xml',
         'views/loan_line_rs_own.xml',
         'views/res_partner.xml',
-        'views/unit_product.xml',
-        'views/voucher_views.xml',
         'wizard/all_installment.xml',
         'report/all_installment_report.xml',
-        'report/installment_received_voucher_report.xml',
-
     ],
     # only loaded in demonstration mode
     'demo': [

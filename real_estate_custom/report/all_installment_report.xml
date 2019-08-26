@@ -67,27 +67,27 @@
                         <br/>
                         <table class="report_table">
                             <tr>
-
                                 <th>Customer</th>
-                                <th>Phone</th>
+                                <th>Installment</th>
+                                <th>Due Date</th>
                                 <th>Contract Ref</th>
                                 <th>Building</th>
                                 <th>Unit</th>
-                                <th>Due Date</th>
-                                <th>Installment</th>
-                                <th>Input Amount</th>
-                                <th>Due Amount</th>
-                                <th>Accounting Date</th>
-                                <th>Voucher Number</th>
+                                <th>Country</th>
+                                <th>City</th>
+                                <th>Region</th>
+                                <th>Paid</th>
                             </tr>
                             <t t-foreach="all_inst" t-as="inst">
                                 <tr>
-
                                     <td>
                                         <span t-field="inst.contract_partner_id"/>
                                     </td>
                                     <td>
-                                        <span t-esc="inst.phone"/>
+                                        <span t-esc="round(inst.amount,2)"/>
+                                    </td>
+                                    <td>
+                                        <span t-esc="inst.date"/>
                                     </td>
                                     <td>
                                         <span t-field="inst.loan_id"/>
@@ -95,54 +95,36 @@
                                     <td>
                                         <span t-field="inst.contract_building"/>
                                     </td>
-                                     <td>
+                                    <td>
                                         <span t-field="inst.contract_building_unit"/>
                                     </td>
-                                    <td>
-                                        <span t-esc="inst.date"/>
-                                    </td>
-                                    <td>
-                                        <span t-esc="inst.amount"/>
-                                    </td>
-                                    <td>
-                                        <span t-esc="inst.due_amount"/>
-                                    </td>
-                                    <td>
-                                        <span t-esc="inst.amount - inst.due_amount"/>
-                                    </td>
 
                                     <td>
-                                        <span t-field="inst.acc_date"/>
+                                        <span t-field="inst.contract_building_unit.country_id"/>
                                     </td>
-
-                                      <td>
-                                        <span t-field="inst.voucher_num"/>
+                                    <td>
+                                        <span t-field="inst.contract_building_unit.city"/>
                                     </td>
-
+                                    <td>
+                                        <span t-field="inst.contract_building_unit.region_id"/>
+                                    </td>
+                                    <td>
+                                        <t t-if="inst.paid">
+                                            <input type="checkbox" checked="checked"/>
+                                        </t>
+                                        <t t-if="not inst.paid">
+                                            <input type="checkbox"/>
+                                        </t>
+                                    </td>
 
                                 </tr>
                             </t>
-
                             <tr>
-                                <th colspan="6" style="text-align:right">Total of Installment</th>
+                                <th colspan="6" style="text-align:right">Total</th>
                                 <th colspan="4">
-                                    <t t-esc="sum(line.amount for line in all_inst)"/>
+                                    <t t-esc="round(total_amount,2)"/>
                                 </th>
-                             </tr>
-
-                             <tr>
-                                <th colspan="6" style="text-align:right">Total of Input Amount</th>
-                                <th colspan="4">
-                                    <t t-esc="sum((line.amount - line.due_amount) for line in all_inst)"/>
-                                </th>
-                             </tr>
-
-                               <tr>
-                                <th colspan="6" style="text-align:right">Total of Due Amount</th>
-                                <th colspan="4">
-                                    <t t-esc="sum(line.due_amount for line in all_inst)"/>
-                                </th>
-                             </tr>
+                            </tr>
 
                         </table>
                     </div>
